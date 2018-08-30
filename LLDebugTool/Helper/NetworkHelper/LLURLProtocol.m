@@ -26,13 +26,15 @@
 #import "LLNetworkModel.h"
 #import "LLConfig.h"
 #import "LLTool.h"
+#import "LLAppHelper.h"
+#import "NSHTTPURLResponse+LL_Utils.h"
 
 static NSString *const HTTPHandledIdentifier = @"HttpHandleIdentifier";
 
-@interface LLURLProtocol () <NSURLSessionTaskDelegate , NSURLSessionDataDelegate>
+@interface LLURLProtocol () <NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) NSURLSessionDataTask *dataTask;
-@property (nonatomic, strong) NSOperationQueue     *sessionDelegateQueue;
+@property (nonatomic, strong) NSURLSession         *session;
 @property (nonatomic, strong) NSURLResponse        *response;
 @property (nonatomic, strong) NSMutableData        *data;
 @property (nonatomic, strong) NSDate               *startDate;
@@ -70,50 +72,76 @@ static NSString *const HTTPHandledIdentifier = @"HttpHandleIdentifier";
     [NSURLProtocol setProperty:@YES
                         forKey:HTTPHandledIdentifier
                      inRequest:mutableReqeust];
-    return [mutableReqeust copy];
+//    return [mutableReqeust copy];
+    return mutableReqeust;
 }
 
 - (void)startLoading {
     self.startDate                                        = [NSDate date];
     self.data                                             = [NSMutableData data];
     NSURLSessionConfiguration *configuration              = [NSURLSessionConfiguration defaultSessionConfiguration];
-    self.sessionDelegateQueue                             = [[NSOperationQueue alloc] init];
-    self.sessionDelegateQueue.maxConcurrentOperationCount = 1;
-    self.sessionDelegateQueue.name                        = @"com.LLDebugTool.queue";
-    NSURLSession *session                                 = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:self.sessionDelegateQueue];
-    self.dataTask                                         = [session dataTaskWithRequest:self.request];
+    self.session                                          = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    self.dataTask                                         = [self.session dataTaskWithRequest:self.request];
     [self.dataTask resume];
-    
 }
 
 - (void)stopLoading {
     [self.dataTask cancel];
     self.dataTask           = nil;
     LLNetworkModel *model = [[LLNetworkModel alloc] init];
-    model.startDate = [[LLTool sharedTool] stringFromDate:self.startDate];
+    model.startDate = [LLTool stringFromDate:self.startDate];
+    // Request
     model.url = self.request.URL;
     model.method = self.request.HTTPMethod;
-    model.headerFields = self.request.allHTTPHeaderFields;
-    model.mineType = self.response.MIMEType;
+    model.headerFields = [self.request.allHTTPHeaderFields mutableCopy];
     if (self.request.HTTPBody) {
-        model.requestBody = [self prettyJSONStringFromData:self.request.HTTPBody];
+        model.requestBody = [LLTool convertJSONStringFromData:self.request.HTTPBody];
     } else if (self.request.HTTPBodyStream) {
         NSData* data = [self dataFromInputStream:self.request.HTTPBodyStream];
-        model.requestBody = [self prettyJSONStringFromData:data];
+        model.requestBody = [LLTool convertJSONStringFromData:data];
     }
+    // Response
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)self.response;
+    model.stateLine = httpResponse.stateLine;
+    model.mimeType = self.response.MIMEType;
+    if (model.mimeType.length == 0) {
+        NSString *absoluteString = self.request.URL.absoluteString.lowercaseString;
+        if ([absoluteString hasSuffix:@".jpg"] || [absoluteString hasSuffix:@".jpeg"] || [absoluteString hasSuffix:@".png"]) {
+            model.isImage = YES;
+        } else if ([absoluteString hasSuffix:@".gif"]) {
+            model.isGif = YES;
+        }
+    }
     model.statusCode = [NSString stringWithFormat:@"%d",(int)httpResponse.statusCode];
     model.responseData = self.data;
-    if (self.response.MIMEType) {
-        model.isImage = [self.response.MIMEType rangeOfString:@"image"].location != NSNotFound;
-    }
-    NSString *absoluteString = self.request.URL.absoluteString.lowercaseString;
-    if ([absoluteString hasSuffix:@".jpg"] || [absoluteString hasSuffix:@".jpeg"] || [absoluteString hasSuffix:@".png"] || [absoluteString hasSuffix:@".gif"]) {
-        model.isImage = YES;
-    }
+    model.responseHeaderFields = [httpResponse.allHeaderFields mutableCopy];
     model.totalDuration = [NSString stringWithFormat:@"%fs",[[NSDate date] timeIntervalSinceDate:self.startDate]];
     model.error = self.error;
-    [[LLStorageManager sharedManager] saveNetworkModel:model];
+    [[LLStorageManager sharedManager] saveModel:model complete:nil];
+    [[LLAppHelper sharedHelper] updateRequestDataTraffic:model.requestDataTrafficValue responseDataTraffic:model.responseDataTrafficValue];
+}
+
+#pragma mark - NSURLSessionDelegate
+// This method ignores certificate validation to resolve some untrusted HTTP requests that fail, and is recommended only in debug mode.
+-(void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
+
+    NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+    __block NSURLCredential *credential = nil;
+
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+        if (credential) {
+            disposition = NSURLSessionAuthChallengeUseCredential;
+        } else {
+            disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+        }
+    } else {
+        disposition = NSURLSessionAuthChallengePerformDefaultHandling;
+    }
+
+    if (completionHandler) {
+        completionHandler(disposition, credential);
+    }
 }
 
 #pragma mark - NSURLSessionTaskDelegate
@@ -125,11 +153,13 @@ static NSString *const HTTPHandledIdentifier = @"HttpHandleIdentifier";
     } else {
         [self.client URLProtocol:self didFailWithError:error];
     }
+    self.error = error;
     self.dataTask = nil;
+    [self.session finishTasksAndInvalidate];
+    self.session = nil;
 }
 
 #pragma mark - NSURLSessionDataDelegate
-
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data {
     [self.data appendData:data];
@@ -150,25 +180,6 @@ static NSString *const HTTPHandledIdentifier = @"HttpHandleIdentifier";
 }
 
 #pragma mark - Primary
-- (NSString *)prettyJSONStringFromData:(NSData *)data
-{
-    if ([data length] == 0) {
-        return nil;
-    }
-    NSString *prettyString = nil;
-    
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-    if ([NSJSONSerialization isValidJSONObject:jsonObject]) {
-        prettyString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:NULL] encoding:NSUTF8StringEncoding];
-        // NSJSONSerialization escapes forward slashes. We want pretty json, so run through and unescape the slashes.
-        prettyString = [prettyString stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
-    } else {
-        prettyString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    }
-    
-    return prettyString;
-}
-
 - (NSData *)dataFromInputStream:(NSInputStream *)stream {
     NSMutableData *data = [[NSMutableData alloc] init];
     if (stream.streamStatus != NSStreamStatusOpen) {

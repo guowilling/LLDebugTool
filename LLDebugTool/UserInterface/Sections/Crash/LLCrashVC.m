@@ -29,6 +29,7 @@
 #import "LLStorageManager.h"
 #import "LLCrashContentVC.h"
 #import "LLImageNameConfig.h"
+#import "LLTool.h"
 
 static NSString *const kCrashCellID = @"CrashCellID";
 
@@ -156,43 +157,45 @@ static NSString *const kCrashCellID = @"CrashCellID";
     // TableView
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
-    [self.tableView registerNib:[UINib nibWithNibName:@"LLCrashCell" bundle:nil] forCellReuseIdentifier:kCrashCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LLCrashCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellReuseIdentifier:kCrashCellID];
     
     // Navigation bar item
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:kEditImageName] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:kDoneImageName] forState:UIControlStateSelected];
+    [btn setImage:[[UIImage LL_imageNamed:kEditImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [btn setImage:[[UIImage LL_imageNamed:kDoneImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
     btn.showsTouchWhenHighlighted = NO;
     btn.adjustsImageWhenHighlighted = NO;
     btn.frame = CGRectMake(0, 0, 40, 40);
+    btn.tintColor = LLCONFIG_TEXT_COLOR;
     [btn addTarget:self action:@selector(rightItemClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = item;
     
     // ToolBar
     self.selectAllItem = [[UIBarButtonItem alloc] initWithTitle:@"Select All" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllItemClick:)];
+    self.selectAllItem.tintColor = LLCONFIG_TEXT_COLOR;
+    
     UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
     self.deleteItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteItemClick:)];
+    self.deleteItem.tintColor = LLCONFIG_TEXT_COLOR;
     self.deleteItem.enabled = NO;
     [self setToolbarItems:@[self.selectAllItem,spaceItem,self.deleteItem] animated:YES];
     
-    if (LLCONFIG_CUSTOM_COLOR) {
-        self.selectAllItem.tintColor = LLCONFIG_TEXT_COLOR;
-        self.deleteItem.tintColor = LLCONFIG_TEXT_COLOR;
-        self.navigationController.toolbar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
-        btn.tintColor = LLCONFIG_TEXT_COLOR;
-        [btn setImage:[[UIImage imageNamed:kEditImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-        [btn setImage:[[UIImage imageNamed:kDoneImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
-    }
+    self.navigationController.toolbar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
     
     [self _loadData];
 }
 
 - (void)_loadData {
-    [self.dataArray removeAllObjects];
-    [self.dataArray addObjectsFromArray:[[LLStorageManager sharedManager] getAllCrashModel]];
-    [self.tableView reloadData];
+    __weak typeof(self) weakSelf = self;
+    [LLTool loadingMessage:@"Loading"];
+    [[LLStorageManager sharedManager] getModels:[LLCrashModel class] launchDate:nil complete:^(NSArray<LLStorageModel *> *result) {
+        [LLTool hideLoadingMessage];
+        [weakSelf.dataArray removeAllObjects];
+        [weakSelf.dataArray addObjectsFromArray:result];
+        [weakSelf.tableView reloadData];
+    }];
 }
 
 - (void)_showDeleteAlertWithIndexPaths:(NSArray *)indexPaths {
@@ -206,20 +209,26 @@ static NSString *const kCrashCellID = @"CrashCellID";
 }
 
 - (void)_deleteFilesWithIndexPaths:(NSArray *)indexPaths {
-    NSMutableArray *models = [[NSMutableArray alloc] init];
+    __block NSMutableArray *models = [[NSMutableArray alloc] init];
     for (NSIndexPath *indexPath in indexPaths) {
         [models addObject:self.dataArray[indexPath.row]];
     }
-    if ([[LLStorageManager sharedManager] removeCrashModels:models]) {
-        [self.dataArray removeObjectsInArray:models];
-        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-    } else {
-        [self showAlertControllerWithMessage:@"Remove crash model fail" handler:^(NSInteger action) {
-            if (action == 1) {
-                [self _loadData];
-            }
-        }];
-    }
+    
+    __weak typeof(self) weakSelf = self;
+    [LLTool loadingMessage:@"Deleting"];
+    [[LLStorageManager sharedManager] removeModels:models complete:^(BOOL result) {
+        [LLTool hideLoadingMessage];
+        if (result) {
+            [weakSelf.dataArray removeObjectsInArray:models];
+            [weakSelf.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            [weakSelf showAlertControllerWithMessage:@"Remove crash model fail" handler:^(NSInteger action) {
+                if (action == 1) {
+                    [weakSelf _loadData];
+                }
+            }];
+        }
+    }];
 }
 
 @end

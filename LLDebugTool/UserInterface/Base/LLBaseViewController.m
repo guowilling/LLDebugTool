@@ -22,16 +22,17 @@
 //  SOFTWARE.
 
 #import "LLBaseViewController.h"
+#import "LLImageNameConfig.h"
 #import "LLDebugTool.h"
 #import "LLMacros.h"
-#import "LLImageNameConfig.h"
 #import "LLWindow.h"
+#import "LLTool.h"
+
+static NSString *const kEmptyCellID = @"emptyCellID";
 
 @interface LLBaseViewController ()
 
 @property (nonatomic , assign) UITableViewStyle style;
-
-@property (nonatomic , strong) UILabel *toastLabel;
 
 @end
 
@@ -48,61 +49,13 @@
     [super viewDidLoad];
     [self initNavigationItems];
     [self setUpTableView];
-    if (LLCONFIG_CUSTOM_COLOR) {
-        self.view.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
-        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : LLCONFIG_TEXT_COLOR}];
-        self.navigationController.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
-        self.tableView.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
-        [self.tableView setSeparatorColor:LLCONFIG_TEXT_COLOR];
-    }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (self.navigationController.viewControllers.count > 1) {
-        self.tabBarController.tabBar.hidden = YES;
-    } else {
-        self.tabBarController.tabBar.hidden = NO;
-    }
+    [self resetDefaultSettings];
+    self.view.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
 }
 
 #pragma mark - Public
 - (void)toastMessage:(NSString *)message {
-    if (self.toastLabel) {
-        [self.toastLabel removeFromSuperview];
-        self.toastLabel = nil;
-    }
-    
-    __block UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, LL_SCREEN_WIDTH - 40, 100)];
-    label.text = message;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByCharWrapping;
-    [label sizeToFit];
-    label.frame = CGRectMake(0, 0, label.frame.size.width + 20, label.frame.size.height + 10);
-    label.layer.cornerRadius = label.font.lineHeight / 2.0;
-    label.layer.masksToBounds = YES;
-    label.center = CGPointMake(LL_SCREEN_WIDTH / 2.0, LL_SCREEN_HEIGHT / 2.0);
-    label.alpha = 0;
-    label.backgroundColor = [UIColor blackColor];
-    label.textColor = [UIColor whiteColor];
-    [self.view addSubview:label];
-    self.toastLabel = label;
-    [UIView animateWithDuration:0.25 animations:^{
-        label.alpha = 1;
-    } completion:^(BOOL finished) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.1 animations:^{
-                label.alpha = 0;
-            } completion:^(BOOL finished) {
-                [label removeFromSuperview];
-            }];
-        });
-    }];
+    [LLTool toastMessage:message];
 }
 
 - (void)showAlertControllerWithMessage:(NSString *)message handler:(void (^)(NSInteger action))handler {
@@ -141,13 +94,14 @@
         btn.frame = CGRectMake(0, 0, 40, 40);
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
         self.navigationItem.leftBarButtonItem = item;
-        UIImageRenderingMode mode = LLCONFIG_CUSTOM_COLOR ? UIImageRenderingModeAlwaysTemplate : UIImageRenderingModeAlwaysOriginal;
-        [btn setImage:[[UIImage imageNamed:kCloseImageName] imageWithRenderingMode:mode] forState:UIControlStateNormal];
+        UIImageRenderingMode mode = UIImageRenderingModeAlwaysTemplate;
+        [btn setImage:[[UIImage LL_imageNamed:kCloseImageName] imageWithRenderingMode:mode] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(leftItemClick) forControlEvents:UIControlEventTouchUpInside];
     }
-
     self.navigationItem.hidesBackButton = NO;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : LLCONFIG_TEXT_COLOR}];
+    self.navigationController.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
 }
 
 - (void)setUpTableView {
@@ -160,8 +114,22 @@
     self.tableView.estimatedSectionHeaderHeight = 0;
     self.tableView.estimatedRowHeight = 50;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    // To Control subviews.
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, LL_SCREEN_WIDTH, CGFLOAT_MIN)];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, LL_SCREEN_WIDTH, CGFLOAT_MIN)];
+    self.tableView.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
+    [self.tableView setSeparatorColor:LLCONFIG_TEXT_COLOR];
+}
+
+- (void)resetDefaultSettings {
+    // Used to solve problems caused by modifying some systems default values with Runtime in the project.
+    // Hopefully you changed these defaults at runtime in viewDidLoad, not viewWillAppear or viewDidAppear
+    self.automaticallyAdjustsScrollViewInsets = YES;
+    self.navigationController.navigationBar.translucent = YES;
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
+    }
 }
 
 #pragma mark - UITableView
@@ -170,7 +138,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kEmptyCellID];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kEmptyCellID];
+    }
+    return cell;
 }
 
 @end

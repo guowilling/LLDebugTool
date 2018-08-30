@@ -28,6 +28,7 @@
 #import "LLNetworkVC.h"
 #import "LLLogVC.h"
 #import "LLConfig.h"
+#import "LLTool.h"
 
 static NSString *const kCrashContentCellID = @"CrashContentCellID";
 
@@ -75,8 +76,10 @@ static NSString *const kCrashContentCellID = @"CrashContentCellID";
     NSString *title = self.titleArray[section];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, LL_SCREEN_WIDTH, 30)];
+    view.backgroundColor = [LLCONFIG_TEXT_COLOR colorWithAlphaComponent:0.2];
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, view.frame.size.width - 16 * 2, view.frame.size.height)];
-    label.textColor = [UIColor darkGrayColor];
+    label.textColor = LLCONFIG_TEXT_COLOR;
     label.font = [UIFont systemFontOfSize:13];
     label.text = title;
     [view addSubview:label];
@@ -88,15 +91,9 @@ static NSString *const kCrashContentCellID = @"CrashContentCellID";
         button.titleLabel.font = [UIFont systemFontOfSize:13];
         [button setTitle:@"Copy" forState:UIControlStateNormal];
         button.tag = section;
+        button.tintColor = LLCONFIG_TEXT_COLOR;
         [button addTarget:self action:@selector(copyButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:button];
-        if (LLCONFIG_CUSTOM_COLOR) {
-            button.tintColor = LLCONFIG_TEXT_COLOR;
-        }
-    }
-    if (LLCONFIG_CUSTOM_COLOR) {
-        label.textColor = LLCONFIG_TEXT_COLOR;
-        view.backgroundColor = [LLCONFIG_TEXT_COLOR colorWithAlphaComponent:0.2];
     }
     
     return view;
@@ -128,10 +125,33 @@ static NSString *const kCrashContentCellID = @"CrashContentCellID";
     self.navigationItem.title = self.model.name;
     self.tableView.estimatedRowHeight = 50;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    [self.tableView registerNib:[UINib nibWithNibName:@"LLCrashContentCell" bundle:nil] forCellReuseIdentifier:kCrashContentCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LLCrashContentCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellReuseIdentifier:kCrashContentCellID];
     
     self.titleArray = [[NSMutableArray alloc] init];
     self.contentArray = [[NSMutableArray alloc] init];
+    
+    [self loadData];
+}
+
+- (void)loadData {
+    __weak typeof(self) weakSelf = self;
+    [LLTool loadingMessage:@"Loading"];
+    [[LLStorageManager sharedManager] getModels:[LLLogModel class] launchDate:_model.launchDate complete:^(NSArray<LLStorageModel *> *result) {
+        // Get log models.
+        __block NSArray *logs = result;
+        [[LLStorageManager sharedManager] getModels:[LLNetworkModel class] launchDate:weakSelf.model.launchDate complete:^(NSArray<LLStorageModel *> *result) {
+            [LLTool hideLoadingMessage];
+            // Get nework requests.
+            NSArray *networkRequests = result;
+            [weakSelf updateDataWithLogs:logs networkRequests:networkRequests];
+        }];
+    }];
+}
+
+- (void)updateDataWithLogs:(NSArray *)logs networkRequests:(NSArray *)networkRequests {
+    [self.titleArray removeAllObjects];
+    [self.contentArray removeAllObjects];
+    
     if (_model.name) {
         [self.titleArray addObject:@"Name"];
         [self.contentArray addObject:_model.name];
@@ -145,13 +165,11 @@ static NSString *const kCrashContentCellID = @"CrashContentCellID";
         [self.contentArray addObject:_model.date];
     }
     
-    NSArray *logs = [[LLStorageManager sharedManager] getAllLogModelsWithLaunchDate:_model.launchDate];
     if (logs.count) {
         [self.titleArray addObject:@"Logs"];
         [self.contentArray addObject:[NSString stringWithFormat:@"%ld logs",(unsigned long)logs.count]];
     }
     
-    NSArray *networkRequests = [[LLStorageManager sharedManager] getAllNetworkModelsWithLaunchDate:_model.launchDate];
     if (networkRequests.count) {
         [self.titleArray addObject:@"Network Requests"];
         [self.contentArray addObject:[NSString stringWithFormat:@"%ld network requests",(unsigned long)networkRequests.count]];
@@ -190,6 +208,7 @@ static NSString *const kCrashContentCellID = @"CrashContentCellID";
         }
         [self.contentArray addObject:str];
     }
+    [self.tableView reloadData];
 }
 
 - (void)copyButtonClick:(UIButton *)sender {

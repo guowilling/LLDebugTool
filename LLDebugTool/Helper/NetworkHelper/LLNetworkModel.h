@@ -21,13 +21,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "LLBaseModel.h"
+#import "LLStorageModel.h"
 
 /**
  Network model. Save and show network request infos.
  */
-@interface LLNetworkModel : LLBaseModel
+@interface LLNetworkModel : LLStorageModel
 
+#pragma mark - Request
 /**
  Network request start date.
  */
@@ -36,7 +37,7 @@
 /**
  Network request URL.
  */
-@property (nonatomic , copy , nullable) NSURL *url;
+@property (nonatomic , strong , nullable) NSURL *url;
 
 /**
  Network request method.
@@ -44,14 +45,30 @@
 @property (nonatomic , copy , nullable) NSString *method;
 
 /**
- Network request mine type.
- */
-@property (nonatomic , copy , nullable) NSString *mineType;
-
-/**
  Network request request body.
  */
 @property (nonatomic , copy , nullable) NSString *requestBody;
+
+/**
+ Network request header.
+ */
+@property (nonatomic , strong , nullable) NSDictionary <NSString *,NSString *>*headerFields;
+
+/**
+ Cookies.
+ */
+@property (nonatomic , strong , readonly , nullable) NSDictionary <NSString *, NSString *>*cookies;
+
+#pragma mark - Response
+/**
+ Http response protocol.
+ */
+@property (nonatomic , copy , nullable) NSString *stateLine;
+
+/**
+ Network request mime type.
+ */
+@property (nonatomic , copy , nullable) NSString *mimeType;
 
 /**
  Network request status code.
@@ -61,12 +78,27 @@
 /**
  Network request response data.
  */
-@property (nonatomic , copy , nullable) NSData *responseData;
+@property (nonatomic , strong , nullable) NSData *responseData;
 
 /**
  Is image or not.
  */
 @property (nonatomic , assign) BOOL isImage;
+
+/**
+ Is gif or not.
+ */
+@property (nonatomic , assign) BOOL isGif;
+
+/**
+ Is html or not.
+ */
+@property (nonatomic , assign , readonly) BOOL isHTML;
+
+/**
+ Is txt or not.
+ */
+@property (nonatomic , assign , readonly) BOOL isTXT;
 
 /**
  Network request used duration.
@@ -79,13 +111,61 @@
 @property (nonatomic , strong , nullable) NSError *error;
 
 /**
- Network request header.
+ Network response header.
  */
-@property (nonatomic , copy , nullable) NSDictionary <NSString *,NSString *>*headerFields;
+@property (nonatomic , strong , nullable) NSDictionary <NSString *,NSString *>*responseHeaderFields;
 
+#pragma mark - Data traffic
+/**
+ Upload data traffic.
+ */
+@property (nonatomic , copy , readonly , nullable) NSString *requestDataTraffic;
+
+/**
+ Download data traffic.
+ */
+@property (nonatomic , copy , readonly , nullable) NSString *responseDataTraffic;
+
+/**
+ Total data traffic.
+ */
+@property (nonatomic , copy , readonly , nullable) NSString *totalDataTraffic;
+
+/**
+ Request line + headers + body.
+ */
+@property (nonatomic , assign , readonly) unsigned long long requestDataTrafficValue;
+
+/**
+ Response state line + headers + response object.
+ */
+@property (nonatomic , assign , readonly) unsigned long long responseDataTrafficValue;
+
+/**
+ Request data traffic + response data traffic.
+ */
+@property (nonatomic , assign , readonly) unsigned long long totalDataTrafficValue;
+
+#pragma mark - Other
 /**
  Network request identity.
  */
 @property (nonatomic , copy , readonly , nonnull) NSString *identity;
+
+#pragma mark - Quick Getter
+/**
+ String converted from headerFields.
+ */
+@property (nonatomic , copy , readonly , nonnull) NSString *headerString;
+
+/**
+ String converted from responseData.
+ */
+@property (nonatomic , copy , readonly , nonnull) NSString *responseString;
+
+/**
+ Convent [date] to NSDate.
+ */
+- (NSDate *_Nullable)dateDescription;
 
 @end

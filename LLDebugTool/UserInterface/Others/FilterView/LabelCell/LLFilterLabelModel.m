@@ -25,4 +25,11 @@
 
 @implementation LLFilterLabelModel
 
+- (instancetype)initWithMessage:(NSString *)message {
+    if (self = [super init]) {
+        _message = message;
+    }
+    return self;
+}
+
 @end

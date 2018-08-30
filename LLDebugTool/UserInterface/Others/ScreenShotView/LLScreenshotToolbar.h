@@ -1,5 +1,5 @@
 //
-//  LLFilterView.h
+//  LLScreenshotToolbar.h
 //
 //  Copyright (c) 2018 LLDebugTool Software Foundation (https://github.com/HDB-Li/LLDebugTool)
 //
@@ -22,18 +22,24 @@
 //  SOFTWARE.
 
 #import <UIKit/UIKit.h>
+#import "LLScreenshotDefine.h"
 
-typedef void(^LLFilterChangeBlock)(NSArray *levels, NSArray *events, NSString *file, NSString *func, NSDate *from, NSDate *end, NSArray *userIdentities);
+@class LLScreenshotToolbar;
+@class LLScreenshotSelectorModel;
 
-@interface LLFilterView : UIView
+@protocol LLScreenshotToolbarDelegate <NSObject>
 
-@property (copy , nonatomic) LLFilterChangeBlock changeBlock;
+- (void)LLScreenshotToolbar:(LLScreenshotToolbar *_Nonnull)toolBar didSelectedAction:(LLScreenshotAction)action selectorModel:(LLScreenshotSelectorModel *_Nullable)selectorModel;
 
-- (instancetype)initWithFrame:(CGRect)frame;
+@end
 
-- (void)configWithData:(NSArray *)data;
+@interface LLScreenshotToolbar : UIView
 
-- (BOOL)isFiltering;
-- (void)cancelFiltering;
+@property (nonatomic , weak , nullable) id <LLScreenshotToolbarDelegate> delegate;
+
+/**
+ Specifies the initialization method.
+ */
+- (instancetype _Nonnull)initWithFrame:(CGRect)frame;
 
 @end

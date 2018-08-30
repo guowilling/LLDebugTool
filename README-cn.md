@@ -3,24 +3,58 @@
 </p>
 
 [![Version](https://img.shields.io/badge/IOS-%3E%3D8.0-f07e48.svg)](https://img.shields.io/badge/IOS-%3E%3D8.0-f07e48.svg)
-[![CocoaPods Compatible](https://img.shields.io/badge/pod-v1.0.2-blue.svg)](https://img.shields.io/badge/pod-v1.0.2-blue.svg)
+[![CocoaPods Compatible](https://img.shields.io/badge/pod-v1.1.5-blue.svg)](https://img.shields.io/badge/pod-v1.1.5-blue.svg)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://img.shields.io/badge/platform-ios-lightgrey.svg)
 [![License](https://img.shields.io/badge/license-MIT-91bc2b.svg)](https://img.shields.io/badge/license-MIT-91bc2b.svg)
+[![Language](https://img.shields.io/badge/Language-Objective--C-yellow.svg)](https://img.shields.io/badge/Language-Objective--C-yellow.svg)
+[![Twitter](https://img.shields.io/badge/twitter-@HdbLi-1DA1F2.svg)](https://twitter.com/HdbLi)
 
-[English Introduction](https://github.com/HDB-Li/LLDebugTool)
+## 简介
+
+[Click here for an English introduction](https://github.com/HDB-Li/LLDebugTool)
 
 LLDebugTool是一款针对开发者和测试者的调试工具，它可以帮助你在非Xcode的情况下，进行数据分析和操作。
 
 为您的下一个项目选择LLDebugTool，或者迁移到您现有的项目中——您会为此感到惊喜！
 
-<div align="center">
-<img src="https://github.com/HDB-Li/HDBImageRepository/blob/master/LLDebugTool/screenGif.gif" width="15%"></img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-1.png" width="15%"> </img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-3.png" width="15%"> </img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-4.png" width="15%"> </img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-5.png" width="15%"> </img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-6.png" width="15%"> </img>
+#### Gif
+
+<div align="left">
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/screenGif.gif" width="20%"></img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenGif-Screenshot.gif" width="20%"></img>
 </div>
+
+#### ScreenShots
+
+<div align="left">
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-1.png" width="18%"></img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-3.png" width="18%"> </img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-4.png" width="18%"> </img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-5.png" width="18%"> </img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-6.png" width="18%"> </img>
+</div>
+
+## 最近更新 (1.1.5)
+
+### 动态启用或停止功能模块
+
+在 `LLConfig` 中增加了一个options `LLConfigAvailableFeature` 用于控制是否启用`LLDebugTool`中的某个功能模块，现在你可以动态的启动/停止某个模块。更多的修改内容可以查看[Version 1.1.5 Project](https://github.com/HDB-Li/LLDebugTool/projects/4)。
+
+#### 新增
+
+* 在 `LLConfig` 中增加了一个options `LLConfigAvailableFeature` 用于控制是否启用`LLDebugTool`中的某个功能模块，现在你可以动态的启动/停止某个模块。
+* `LLConfigLogStyle` 增加2个枚举值，`LLConfigLogFileFuncDesc` and `LLConfigLogFileDesc`。
+
+#### 更新
+
+* 更新 `LLAppHelper` 和 `LLConfig`，整理代码。
+* 修改 `LLConfig`，现在你可以在运行中动态的修改 `colorStyle` and `windowStyle`，更多效果可以查看demo。
+* 修改 `LLSubTitleTableViewCell` 解决UITextView在ios 8版本下的bug。
+
+#### 其他
+
+* 更新了demo，现在看起来舒服多了。
 
 ## 我能用LLDebugTool做什么?
 
@@ -42,9 +76,21 @@ LLDebugTool是一款针对开发者和测试者的调试工具，它可以帮助
 
 [CocoaPods](http://cocoapods.org) 是集成`LLDebugTool`的首选方式。
 
-1. 添加 `pod 'LLDebugTool'` 到你的Podfile里。如果只想在Debug模式下使用，则添加`pod 'LLDebugTool' ,:configurations => ['Debug']` 到你的Podfile里。
-2. 终端输入`pod install`来进行集成。搜索不到`LLDebugTool`时，可先运行`pod repo update`，再执行`pod install`。
+1. 添加 `pod 'LLDebugTool' , '~> 1.0.0'` 到你的Podfile里。如果只想在Debug模式下使用，则添加`pod 'LLDebugTool' , '~> 1.0.0' ,:configurations => ['Debug']` 到你的Podfile里，详细的配置方式可以查看[Wiki/如何仅在Debug环境中使用](https://github.com/HDB-Li/LLDebugTool/wiki/如何仅在Debug环境中使用)。如果你想要指定某个版本，可以类似这样使用 `pod 'LLDebugTool' , '1.1.5' ,:configurations => ['Debug']`。
+2. 终端输入`pod install`来进行集成。搜索不到`LLDebugTool`或者搜不到最新版本时，可先运行`pod repo update`，再执行`pod install`。
 3. 在你需要使用LLDebugTool的文件里添加`#import "LLDebug.h"`，或者直接在pch文件中添加`#import "LLDebug.h"`。
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) 是一个分散的依赖管理器，它构建您的依赖并为您提供framework框架。
+
+1. 要使用Carthage将LLDebugTool集成到Xcode项目中，请在`Cartfile`中指定它:
+
+```ogdl
+github "LLDebugTool"
+```
+
+2. 运行 `carthage` 来构建框架，并将构建的`LLDebugTool.framework`拖到Xcode项目中。
 
 ### 源文件
 
@@ -126,7 +172,6 @@ LLDebugTool是一款针对开发者和测试者的调试工具，它可以帮助
 ```
 #import "LLDebug.h"
 
-- (void)test
 - (void)testEventErrorLog {
     // Insert an LLog_Error_Event where you want to print an event and level log.
     LLog_Error_Event(@"The event that you want to mark. such as bugA, taskB or processC.",@"Message you want to save or print.");
@@ -151,7 +196,8 @@ LLDebugTool提供了一个快捷的方式来查看和操作沙盒文件，你可
 
 ### 更多使用
 
-你可以下载并运行["LLDebugToolDemo"](https://github.com/HDB-Li/LLDebugTool/archive/master.zip)来发现LLDebugTool的更多使用方式。Demo是在XCode9.3，ios 11.3，cocoapods 1.5.0下运行的，如果有任何版本兼容问题，请告诉我。
+* 你可以通过查看[Wiki](https://github.com/HDB-Li/LLDebugTool/wiki)，获得更多帮助。
+* 你可以下载并运行[LLDebugToolDemo](https://github.com/HDB-Li/LLDebugTool/archive/master.zip)来发现LLDebugTool的更多使用方式。Demo是在XCode9.3，ios 11.3，cocoapods 1.5.0下运行的，如果有任何版本兼容问题，请告诉我。
 
 ## 要求
 
@@ -162,6 +208,8 @@ LLDebugTool在支持ios8+，并且需要使用ARC模式。使用到的框架已�
 * `Foundation`
 
 * `SystemConfiguration`
+
+* `Photos`
 
 * `malloc`
 
@@ -221,8 +269,9 @@ LLDebugTool在支持ios8+，并且需要使用ARC模式。使用到的框架已�
 
 ## 联系
 
+- 可以发邮件到[llworkinggroup1992@gmail.com](llworkinggroup1992@gmail.com)
+- 可以在twitter中[@HdbLi](https://twitter.com/HdbLi)发私信给我。
 - 可以在[简书](https://www.jianshu.com/u/a3c82fae85be)中发私信给我。
-- 可以发邮件到[llworkinggroup@qq.com](llworkinggroup@qq.com)
 
 ## 更新日志
 

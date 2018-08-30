@@ -21,9 +21,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "LLBaseModel.h"
+#import "LLStorageModel.h"
 
-@interface LLCrashModel : LLBaseModel
+@interface LLCrashModel : LLStorageModel
 
 /**
  * Crash Name

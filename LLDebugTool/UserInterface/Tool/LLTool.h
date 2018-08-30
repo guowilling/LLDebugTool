@@ -25,42 +25,74 @@
 #import <UIKit/UIKit.h>
 
 /**
- Work as factory.
+ Work as tool.
  */
 @interface LLTool : NSObject
 
 /**
- Singleton to do simple repetitive tasks.
- 
- @return Singleton
- */
-+ (instancetype)sharedTool;
-
-/**
  Identity to model. Deal with the same date, start at 1.
  */
-- (NSString *)absolutelyIdentity;
-
++ (NSString *)absolutelyIdentity;
 
 /**
  The only dateformatter for [LLConfig dateFormatter].
  */
-- (NSString *)stringFromDate:(NSDate *)date;
-- (NSDate *)dateFromString:(NSString *)string;
++ (NSString *)stringFromDate:(NSDate *)date;
++ (NSDate *)dateFromString:(NSString *)string;
 
 /**
  The only dateformatter for "yyyy-MM-dd".
  */
-- (NSString *)dayStringFromDate:(NSDate *)date;
++ (NSString *)dayStringFromDate:(NSDate *)date;
++ (NSString *)dayDateFromString:(NSString *)string;
 
 /**
  The only dateformatter for "yyyy-MM-dd HH:mm:ss".
  */
-- (NSDate *)staticDateFromString:(NSString *)string;
++ (NSDate *)staticDateFromString:(NSString *)string;
++ (NSString *)staticStringFromDate:(NSDate *)date;
 
 /**
  Create lines of unity.
  */
 + (UIView *)lineView:(CGRect)frame superView:(UIView *)superView;
+
+/**
+ Convert data or dictionary to JSONString.
+ */
++ (NSString *)convertJSONStringFromData:(NSData *)data;
++ (NSString *)convertJSONStringFromDictionary:(NSDictionary *)dictionary;
+
+/**
+ Create directory if not exist.
+ */
++ (BOOL)createDirectoryAtPath:(NSString *)path;
+
+/**
+ Get rect from two point
+ */
++ (CGRect)rectWithPoint:(CGPoint)point otherPoint:(CGPoint)otherPoint;
+
+/**
+ Show toast.
+ */
++ (void)toastMessage:(NSString *)message;
+
+/**
+ Show or hide loading message.
+ */
++ (void)loadingMessage:(NSString *)message;
++ (void)hideLoadingMessage;
+
+#pragma mark - DEPRECATED
+
++ (instancetype)sharedTool DEPRECATED_ATTRIBUTE;
+- (NSString *)absolutelyIdentity DEPRECATED_MSG_ATTRIBUTE("Use class method replace");
+- (NSString *)stringFromDate:(NSDate *)date DEPRECATED_MSG_ATTRIBUTE("Use class method replace");
+- (NSDate *)dateFromString:(NSString *)string DEPRECATED_MSG_ATTRIBUTE("Use class method replace");
+- (NSString *)dayStringFromDate:(NSDate *)date DEPRECATED_MSG_ATTRIBUTE("Use class method replace");
+- (NSDate *)staticDateFromString:(NSString *)string DEPRECATED_MSG_ATTRIBUTE("Use class method replace");
+- (NSString *)staticStringFromDate:(NSDate *)date DEPRECATED_MSG_ATTRIBUTE("Use class method replace");
+- (void)toastMessage:(NSString *)message DEPRECATED_MSG_ATTRIBUTE("Use class method replace");
 
 @end

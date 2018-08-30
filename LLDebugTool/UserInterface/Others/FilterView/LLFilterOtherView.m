@@ -65,8 +65,7 @@ static NSString *const kLabelCellID = @"LabelCellID";
 - (void)updateFileDataDictionary:(NSDictionary <NSString *, NSArray *>*)dataDictionary fromDate:(NSDate *)fromDate endDate:(NSDate *)endDate userIdentities:(NSArray *)userIdentities {
     [self.userIdDataArray removeAllObjects];
     for (NSString *userId in userIdentities) {
-        LLFilterLabelModel *model = [[LLFilterLabelModel alloc] init];
-        model.message = userId;
+        LLFilterLabelModel *model = [[LLFilterLabelModel alloc] initWithMessage:userId];
         [self.userIdDataArray addObject:model];
     }
     _fileDataArray = dataDictionary.allKeys;
@@ -113,8 +112,8 @@ static NSString *const kLabelCellID = @"LabelCellID";
 
 - (void)reCalculateFilters {
     if (_changeBlock) {
-        NSDate *fromDate = [[LLTool sharedTool] staticDateFromString:_fromDateModel.currentFilter];
-        NSDate *endDate = [[LLTool sharedTool] staticDateFromString:_endDateModel.currentFilter];
+        NSDate *fromDate = [LLTool staticDateFromString:_fromDateModel.currentFilter];
+        NSDate *endDate = [LLTool staticDateFromString:_endDateModel.currentFilter];
         NSMutableArray *userIds = [[NSMutableArray alloc] init];
         
         for (LLFilterLabelModel *model in self.userIdDataArray) {
@@ -213,19 +212,13 @@ static NSString *const kLabelCellID = @"LabelCellID";
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         static NSInteger labelTag = 1000;
         UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kHeaderID forIndexPath:indexPath];
-        view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        if (LLCONFIG_CUSTOM_COLOR) {
-            view.backgroundColor = [LLCONFIG_TEXT_COLOR colorWithAlphaComponent:0.2];
-        }
+        view.backgroundColor = [LLCONFIG_TEXT_COLOR colorWithAlphaComponent:0.2];
         if (![view viewWithTag:labelTag]) {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, view.frame.size.width - 12, view.frame.size.height)];
             label.font = [UIFont boldSystemFontOfSize:13];
-            label.textColor = [UIColor blackColor];
+            label.textColor = LLCONFIG_TEXT_COLOR;
             label.tag = labelTag;
             [view addSubview:label];
-            if (LLCONFIG_CUSTOM_COLOR) {
-                label.textColor = LLCONFIG_TEXT_COLOR;
-            }
         }
         UILabel *label = [view viewWithTag:labelTag];
         if (indexPath.section == 0) {
@@ -237,7 +230,7 @@ static NSString *const kLabelCellID = @"LabelCellID";
         }
         return view;
     }
-    return nil;
+    return [[UICollectionReusableView alloc] init];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -266,7 +259,7 @@ static NSString *const kLabelCellID = @"LabelCellID";
     if (indexPath.section == 0 || indexPath.section == 1) {
         return CGSizeMake(LL_SCREEN_WIDTH, 25);
     }
-    return CGSizeMake((LL_SCREEN_WIDTH - 5 * 10) / 3.0, 25);
+    return CGSizeMake((LL_SCREEN_WIDTH - 5 * 10) / 3.0, 30);
 }
 
 #pragma mark - Primary
@@ -277,16 +270,12 @@ static NSString *const kLabelCellID = @"LabelCellID";
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.showsVerticalScrollIndicator = NO;
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"LLFilterTextFieldCell" bundle:nil] forCellWithReuseIdentifier:kTextFieldCellID];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"LLFilterLabelCell" bundle:nil] forCellWithReuseIdentifier:kLabelCellID];
+    self.collectionView.backgroundColor = [LLCONFIG_BACKGROUND_COLOR colorWithAlphaComponent:0.75];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LLFilterTextFieldCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellWithReuseIdentifier:kTextFieldCellID];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LLFilterLabelCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellWithReuseIdentifier:kLabelCellID];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kHeaderID];
     [self addSubview:self.collectionView];
-    [LLTool lineView:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1) superView:self];
-    
-    if (LLCONFIG_CUSTOM_COLOR) {
-        self.collectionView.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
-    }
+    [LLTool lineView:CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1) superView:self];    
 }
 
 @end

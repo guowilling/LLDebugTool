@@ -8,11 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		208678B3E17E2AAB3B0E945F /* libPods-LLDebugToolDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 533ECC0E7675B1A81455CB56 /* libPods-LLDebugToolDemo.a */; };
+		2313EF2F20F5ED170038AD06 /* UIImage+LL_Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2313EF2E20F5ED160038AD06 /* UIImage+LL_Utils.m */; };
+		256DF576EB32FE0F9D9E099F /* libPods-LLDebugToolDemoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 250A2DF7939C9F66F595658E /* libPods-LLDebugToolDemoUITests.a */; };
 		3602DC532099C4AF00F8CE50 /* LLBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602DC522099C4AF00F8CE50 /* LLBaseTableViewCell.m */; };
+		3629E3922136830A00226C79 /* BaseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3629E3862136830A00226C79 /* BaseTestViewController.m */; };
+		3629E3932136830A00226C79 /* TestCrashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3629E3872136830A00226C79 /* TestCrashViewController.m */; };
+		3629E3942136830A00226C79 /* TestWindowStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3629E38A2136830A00226C79 /* TestWindowStyleViewController.m */; };
+		3629E3952136830A00226C79 /* TestLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3629E38B2136830A00226C79 /* TestLogViewController.m */; };
+		3629E3962136830A00226C79 /* TestNetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3629E38E2136830A00226C79 /* TestNetworkViewController.m */; };
+		3629E3972136830A00226C79 /* TestColorStyleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3629E3902136830A00226C79 /* TestColorStyleViewController.m */; };
+		362A79AF21211B8C002E06FF /* LLStorageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 362A79AE21211B8C002E06FF /* LLStorageModel.m */; };
+		363FE42721196CC9005F9C0D /* LLNetworkFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 363FE42621196CC9005F9C0D /* LLNetworkFilterView.m */; };
+		363FE43021198AC5005F9C0D /* LLFilterDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 363FE42F21198AC5005F9C0D /* LLFilterDateView.m */; };
 		367E27A120A1A8480032EF0D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 367E27A320A1A8480032EF0D /* Localizable.strings */; };
 		367E855720A68EC100E5B472 /* LLSubTitleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 367E855520A68EC100E5B472 /* LLSubTitleTableViewCell.m */; };
 		367E855820A68EC100E5B472 /* LLSubTitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 367E855620A68EC100E5B472 /* LLSubTitleTableViewCell.xib */; };
 		367F94C7209AF38300CA1821 /* LLBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 367F94C6209AF38300CA1821 /* LLBaseNavigationController.m */; };
+		3687521F20C69B22002C6AD9 /* LLScreenshotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687521120C69B21002C6AD9 /* LLScreenshotView.m */; };
+		3687522020C69B22002C6AD9 /* LLScreenshotActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687521220C69B21002C6AD9 /* LLScreenshotActionView.m */; };
+		3687522120C69B22002C6AD9 /* LLScreenshotBaseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687521620C69B21002C6AD9 /* LLScreenshotBaseOperation.m */; };
+		3687522220C69B22002C6AD9 /* LLScreenshotSelectorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687521920C69B22002C6AD9 /* LLScreenshotSelectorModel.m */; };
+		3687522320C69B22002C6AD9 /* LLScreenshotToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687521B20C69B22002C6AD9 /* LLScreenshotToolbar.m */; };
+		3687522420C69B22002C6AD9 /* LLScreenshotSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687521C20C69B22002C6AD9 /* LLScreenshotSelectorView.m */; };
+		3687522520C69B22002C6AD9 /* LLScreenshotImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3687521D20C69B22002C6AD9 /* LLScreenshotImageView.m */; };
+		368F9DE82119AAF4003F8264 /* LLLogFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF4E2099897F007A3188 /* LLLogFilterView.m */; };
+		3691A61B20C7E63B00E22192 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3691A61D20C7E63B00E22192 /* InfoPlist.strings */; };
+		369B258F212E5D6700E771D8 /* NSHTTPURLResponse+LL_Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B258E212E5D6700E771D8 /* NSHTTPURLResponse+LL_Utils.m */; };
+		36A0007720BE863700AE8810 /* NetTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A0007620BE863700AE8810 /* NetTool.m */; };
+		36AE43DB20C788E90066EA41 /* LLScreenshotHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 36AE43DA20C788E90066EA41 /* LLScreenshotHelper.m */; };
 		36C5BF782099897F007A3188 /* LLConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BEEE2099897F007A3188 /* LLConfig.m */; };
 		36C5BF792099897F007A3188 /* LLCrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BEF22099897F007A3188 /* LLCrashHelper.m */; };
 		36C5BF7A2099897F007A3188 /* LLStorageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BEF52099897F007A3188 /* LLStorageManager.m */; };
@@ -47,14 +70,12 @@
 		36C5BF982099897F007A3188 /* LLLogContentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF372099897F007A3188 /* LLLogContentVC.m */; };
 		36C5BF992099897F007A3188 /* LLAppInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF392099897F007A3188 /* LLAppInfoVC.m */; };
 		36C5BF9A2099897F007A3188 /* LLDebugTool.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 36C5BF3C2099897F007A3188 /* LLDebugTool.bundle */; };
-		36C5BF9B2099897F007A3188 /* LLFilterLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF412099897F007A3188 /* LLFilterLevelView.m */; };
 		36C5BF9C2099897F007A3188 /* LLFilterOtherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF422099897F007A3188 /* LLFilterOtherView.m */; };
 		36C5BF9D2099897F007A3188 /* LLFilterFilePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF472099897F007A3188 /* LLFilterFilePickerView.m */; };
 		36C5BF9E2099897F007A3188 /* LLFilterTextFieldModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF482099897F007A3188 /* LLFilterTextFieldModel.m */; };
 		36C5BF9F2099897F007A3188 /* LLFilterDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF492099897F007A3188 /* LLFilterDatePickerView.m */; };
 		36C5BFA02099897F007A3188 /* LLFilterTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF4A2099897F007A3188 /* LLFilterTextFieldCell.m */; };
 		36C5BFA12099897F007A3188 /* LLFilterTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36C5BF4B2099897F007A3188 /* LLFilterTextFieldCell.xib */; };
-		36C5BFA22099897F007A3188 /* LLFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF4E2099897F007A3188 /* LLFilterView.m */; };
 		36C5BFA32099897F007A3188 /* LLFilterLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36C5BF532099897F007A3188 /* LLFilterLabelCell.xib */; };
 		36C5BFA42099897F007A3188 /* LLFilterLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF542099897F007A3188 /* LLFilterLabelCell.m */; };
 		36C5BFA52099897F007A3188 /* LLFilterLabelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF552099897F007A3188 /* LLFilterLabelModel.m */; };
@@ -70,6 +91,9 @@
 		36C5BFAF2099897F007A3188 /* LLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF722099897F007A3188 /* LLTool.m */; };
 		36C5BFB02099897F007A3188 /* LLDebugTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BF762099897F007A3188 /* LLDebugTool.m */; };
 		36C5BFB320999181007A3188 /* LLCrashModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C5BFB220999181007A3188 /* LLCrashModel.m */; };
+		36E248882123BAE300D03F44 /* LLDebugToolDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E248872123BAE300D03F44 /* LLDebugToolDemoTests.m */; };
+		36E248962123BAE900D03F44 /* LLDebugToolDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E248952123BAE900D03F44 /* LLDebugToolDemoUITests.m */; };
+		C41B0A0921205BD700A058CF /* NSObject+LL_Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = C41B0A0721205BD700A058CF /* NSObject+LL_Utils.m */; };
 		C43BA80C205AB095006307BE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BA80B205AB095006307BE /* AppDelegate.m */; };
 		C43BA80F205AB095006307BE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BA80E205AB095006307BE /* ViewController.m */; };
 		C43BA812205AB095006307BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43BA810205AB095006307BE /* Main.storyboard */; };
@@ -77,12 +101,53 @@
 		C43BA817205AB095006307BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43BA815205AB095006307BE /* LaunchScreen.storyboard */; };
 		C43BA81A205AB095006307BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BA819205AB095006307BE /* main.m */; };
 		C4D3B5E4209ECE76006AF138 /* NSURLSessionConfiguration+LL_Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = C4D3B5E3209ECE76006AF138 /* NSURLSessionConfiguration+LL_Swizzling.m */; };
+		D324B75781E09F9EA96AC8B5 /* libPods-LLDebugToolDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1B877316C71C92C11DF5A9A /* libPods-LLDebugToolDemoTests.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		36E2488A2123BAE300D03F44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C43BA7FF205AB095006307BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C43BA806205AB095006307BE;
+			remoteInfo = LLDebugToolDemo;
+		};
+		36E248982123BAE900D03F44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C43BA7FF205AB095006307BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C43BA806205AB095006307BE;
+			remoteInfo = LLDebugToolDemo;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0857CAF55E62609DE772D43C /* Pods-LLDebugToolDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLDebugToolDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-LLDebugToolDemo/Pods-LLDebugToolDemo.release.xcconfig"; sourceTree = "<group>"; };
+		2313EF2D20F5ED160038AD06 /* UIImage+LL_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+LL_Utils.h"; sourceTree = "<group>"; };
+		2313EF2E20F5ED160038AD06 /* UIImage+LL_Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+LL_Utils.m"; sourceTree = "<group>"; };
+		250A2DF7939C9F66F595658E /* libPods-LLDebugToolDemoUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LLDebugToolDemoUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		34ACB65EBB30B1CA47DFC39F /* Pods-LLDebugToolDemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLDebugToolDemoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LLDebugToolDemoUITests/Pods-LLDebugToolDemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3602DC512099C4AF00F8CE50 /* LLBaseTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLBaseTableViewCell.h; sourceTree = "<group>"; };
 		3602DC522099C4AF00F8CE50 /* LLBaseTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLBaseTableViewCell.m; sourceTree = "<group>"; };
+		3629E3862136830A00226C79 /* BaseTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTestViewController.m; sourceTree = "<group>"; };
+		3629E3872136830A00226C79 /* TestCrashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCrashViewController.m; sourceTree = "<group>"; };
+		3629E3882136830A00226C79 /* TestColorStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestColorStyleViewController.h; sourceTree = "<group>"; };
+		3629E3892136830A00226C79 /* TestNetworkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestNetworkViewController.h; sourceTree = "<group>"; };
+		3629E38A2136830A00226C79 /* TestWindowStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWindowStyleViewController.m; sourceTree = "<group>"; };
+		3629E38B2136830A00226C79 /* TestLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestLogViewController.m; sourceTree = "<group>"; };
+		3629E38C2136830A00226C79 /* BaseTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTestViewController.h; sourceTree = "<group>"; };
+		3629E38D2136830A00226C79 /* TestWindowStyleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWindowStyleViewController.h; sourceTree = "<group>"; };
+		3629E38E2136830A00226C79 /* TestNetworkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestNetworkViewController.m; sourceTree = "<group>"; };
+		3629E38F2136830A00226C79 /* TestCrashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCrashViewController.h; sourceTree = "<group>"; };
+		3629E3902136830A00226C79 /* TestColorStyleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestColorStyleViewController.m; sourceTree = "<group>"; };
+		3629E3912136830A00226C79 /* TestLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLogViewController.h; sourceTree = "<group>"; };
+		362A79AD21211B8C002E06FF /* LLStorageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLStorageModel.h; sourceTree = "<group>"; };
+		362A79AE21211B8C002E06FF /* LLStorageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLStorageModel.m; sourceTree = "<group>"; };
+		363FE42521196CC9005F9C0D /* LLNetworkFilterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLNetworkFilterView.h; sourceTree = "<group>"; };
+		363FE42621196CC9005F9C0D /* LLNetworkFilterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLNetworkFilterView.m; sourceTree = "<group>"; };
+		363FE42E21198AC5005F9C0D /* LLFilterDateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterDateView.h; sourceTree = "<group>"; };
+		363FE42F21198AC5005F9C0D /* LLFilterDateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLFilterDateView.m; sourceTree = "<group>"; };
+		365D4D7020C91B3900A5D59E /* LLDebugToolMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLDebugToolMacros.h; sourceTree = "<group>"; };
 		367E279720A1A7880032EF0D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		367E279820A1A7880032EF0D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		367E27A220A1A8480032EF0D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -92,6 +157,30 @@
 		367E855620A68EC100E5B472 /* LLSubTitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LLSubTitleTableViewCell.xib; sourceTree = "<group>"; };
 		367F94C5209AF38300CA1821 /* LLBaseNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLBaseNavigationController.h; sourceTree = "<group>"; };
 		367F94C6209AF38300CA1821 /* LLBaseNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLBaseNavigationController.m; sourceTree = "<group>"; };
+		3687521020C69B21002C6AD9 /* LLScreenshotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotView.h; sourceTree = "<group>"; };
+		3687521120C69B21002C6AD9 /* LLScreenshotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotView.m; sourceTree = "<group>"; };
+		3687521220C69B21002C6AD9 /* LLScreenshotActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotActionView.m; sourceTree = "<group>"; };
+		3687521320C69B21002C6AD9 /* LLScreenshotActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotActionView.h; sourceTree = "<group>"; };
+		3687521420C69B21002C6AD9 /* LLScreenshotImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotImageView.h; sourceTree = "<group>"; };
+		3687521520C69B21002C6AD9 /* LLScreenshotSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotSelectorView.h; sourceTree = "<group>"; };
+		3687521620C69B21002C6AD9 /* LLScreenshotBaseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotBaseOperation.m; sourceTree = "<group>"; };
+		3687521720C69B21002C6AD9 /* LLScreenshotDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotDefine.h; sourceTree = "<group>"; };
+		3687521820C69B21002C6AD9 /* LLScreenshotSelectorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotSelectorModel.h; sourceTree = "<group>"; };
+		3687521920C69B22002C6AD9 /* LLScreenshotSelectorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotSelectorModel.m; sourceTree = "<group>"; };
+		3687521A20C69B22002C6AD9 /* LLScreenshotBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotBaseOperation.h; sourceTree = "<group>"; };
+		3687521B20C69B22002C6AD9 /* LLScreenshotToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotToolbar.m; sourceTree = "<group>"; };
+		3687521C20C69B22002C6AD9 /* LLScreenshotSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotSelectorView.m; sourceTree = "<group>"; };
+		3687521D20C69B22002C6AD9 /* LLScreenshotImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotImageView.m; sourceTree = "<group>"; };
+		3687521E20C69B22002C6AD9 /* LLScreenshotToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotToolbar.h; sourceTree = "<group>"; };
+		3691A61C20C7E63B00E22192 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3691A61E20C7E63D00E22192 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		369B258D212E5D6700E771D8 /* NSHTTPURLResponse+LL_Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPURLResponse+LL_Utils.h"; sourceTree = "<group>"; };
+		369B258E212E5D6700E771D8 /* NSHTTPURLResponse+LL_Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPURLResponse+LL_Utils.m"; sourceTree = "<group>"; };
+		36A0007520BE863700AE8810 /* NetTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetTool.h; sourceTree = "<group>"; };
+		36A0007620BE863700AE8810 /* NetTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetTool.m; sourceTree = "<group>"; };
+		36AE43D920C788E90066EA41 /* LLScreenshotHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLScreenshotHelper.h; sourceTree = "<group>"; };
+		36AE43DA20C788E90066EA41 /* LLScreenshotHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLScreenshotHelper.m; sourceTree = "<group>"; };
+		36B464F0210AAA2C00F72B30 /* LLLogHelperEventDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LLLogHelperEventDefine.h; sourceTree = "<group>"; };
 		36C5BEEE2099897F007A3188 /* LLConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLConfig.m; sourceTree = "<group>"; };
 		36C5BEEF2099897F007A3188 /* LLConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLConfig.h; sourceTree = "<group>"; };
 		36C5BEF22099897F007A3188 /* LLCrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLCrashHelper.m; sourceTree = "<group>"; };
@@ -155,7 +244,6 @@
 		36C5BF3C2099897F007A3188 /* LLDebugTool.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LLDebugTool.bundle; sourceTree = "<group>"; };
 		36C5BF3D2099897F007A3188 /* LLImageNameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLImageNameConfig.h; sourceTree = "<group>"; };
 		36C5BF3F2099897F007A3188 /* YWFilePreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YWFilePreviewController.h; sourceTree = "<group>"; };
-		36C5BF412099897F007A3188 /* LLFilterLevelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLFilterLevelView.m; sourceTree = "<group>"; };
 		36C5BF422099897F007A3188 /* LLFilterOtherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLFilterOtherView.m; sourceTree = "<group>"; };
 		36C5BF432099897F007A3188 /* LLFilterEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterEventView.h; sourceTree = "<group>"; };
 		36C5BF452099897F007A3188 /* LLFilterTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterTextFieldCell.h; sourceTree = "<group>"; };
@@ -167,8 +255,7 @@
 		36C5BF4B2099897F007A3188 /* LLFilterTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LLFilterTextFieldCell.xib; sourceTree = "<group>"; };
 		36C5BF4C2099897F007A3188 /* LLFilterFilePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterFilePickerView.h; sourceTree = "<group>"; };
 		36C5BF4D2099897F007A3188 /* LLFilterTextFieldModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterTextFieldModel.h; sourceTree = "<group>"; };
-		36C5BF4E2099897F007A3188 /* LLFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLFilterView.m; sourceTree = "<group>"; };
-		36C5BF4F2099897F007A3188 /* LLFilterLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterLevelView.h; sourceTree = "<group>"; };
+		36C5BF4E2099897F007A3188 /* LLLogFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLLogFilterView.m; sourceTree = "<group>"; };
 		36C5BF512099897F007A3188 /* LLFilterLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterLabelCell.h; sourceTree = "<group>"; };
 		36C5BF522099897F007A3188 /* LLFilterLabelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterLabelModel.h; sourceTree = "<group>"; };
 		36C5BF532099897F007A3188 /* LLFilterLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LLFilterLabelCell.xib; sourceTree = "<group>"; };
@@ -176,7 +263,7 @@
 		36C5BF552099897F007A3188 /* LLFilterLabelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLFilterLabelModel.m; sourceTree = "<group>"; };
 		36C5BF562099897F007A3188 /* LLFilterOtherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterOtherView.h; sourceTree = "<group>"; };
 		36C5BF572099897F007A3188 /* LLFilterEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLFilterEventView.m; sourceTree = "<group>"; };
-		36C5BF582099897F007A3188 /* LLFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLFilterView.h; sourceTree = "<group>"; };
+		36C5BF582099897F007A3188 /* LLLogFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLLogFilterView.h; sourceTree = "<group>"; };
 		36C5BF592099897F007A3188 /* LLMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLMacros.h; sourceTree = "<group>"; };
 		36C5BF5A2099897F007A3188 /* YWFilePreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YWFilePreviewController.m; sourceTree = "<group>"; };
 		36C5BF5B2099897F007A3188 /* LLUITableViewLongPressGestureRecognizerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLUITableViewLongPressGestureRecognizerDelegate.h; sourceTree = "<group>"; };
@@ -201,8 +288,19 @@
 		36C5BF772099897F007A3188 /* LLDebugTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLDebugTool.h; sourceTree = "<group>"; };
 		36C5BFB120999181007A3188 /* LLCrashModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLCrashModel.h; sourceTree = "<group>"; };
 		36C5BFB220999181007A3188 /* LLCrashModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLCrashModel.m; sourceTree = "<group>"; };
+		36E248852123BAE300D03F44 /* LLDebugToolDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLDebugToolDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		36E248872123BAE300D03F44 /* LLDebugToolDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLDebugToolDemoTests.m; sourceTree = "<group>"; };
+		36E248892123BAE300D03F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36E248932123BAE900D03F44 /* LLDebugToolDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LLDebugToolDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		36E248952123BAE900D03F44 /* LLDebugToolDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LLDebugToolDemoUITests.m; sourceTree = "<group>"; };
+		36E248972123BAE900D03F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		532D187B41D9EFF04391FD36 /* Pods-LLDebugToolDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLDebugToolDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LLDebugToolDemo/Pods-LLDebugToolDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		533ECC0E7675B1A81455CB56 /* libPods-LLDebugToolDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LLDebugToolDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		638C108F891808060C7ED772 /* Pods-LLDebugToolDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLDebugToolDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LLDebugToolDemoTests/Pods-LLDebugToolDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7630F57F70FEB38A6705DA1A /* Pods-LLDebugToolDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLDebugToolDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LLDebugToolDemoTests/Pods-LLDebugToolDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		ADC0AD5C07B446A537F680CF /* Pods-LLDebugToolDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLDebugToolDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LLDebugToolDemoUITests/Pods-LLDebugToolDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C41B0A0721205BD700A058CF /* NSObject+LL_Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LL_Utils.m"; sourceTree = "<group>"; };
+		C41B0A0821205BD700A058CF /* NSObject+LL_Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+LL_Utils.h"; sourceTree = "<group>"; };
 		C43BA807205AB095006307BE /* LLDebugToolDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLDebugToolDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43BA80A205AB095006307BE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C43BA80B205AB095006307BE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -215,9 +313,26 @@
 		C43BA819205AB095006307BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C4D3B5E2209ECE76006AF138 /* NSURLSessionConfiguration+LL_Swizzling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+LL_Swizzling.h"; sourceTree = "<group>"; };
 		C4D3B5E3209ECE76006AF138 /* NSURLSessionConfiguration+LL_Swizzling.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionConfiguration+LL_Swizzling.m"; sourceTree = "<group>"; };
+		D1B877316C71C92C11DF5A9A /* libPods-LLDebugToolDemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LLDebugToolDemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		36E248822123BAE300D03F44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D324B75781E09F9EA96AC8B5 /* libPods-LLDebugToolDemoTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		36E248902123BAE900D03F44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256DF576EB32FE0F9D9E099F /* libPods-LLDebugToolDemoUITests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C43BA804205AB095006307BE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,6 +344,74 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2313EF2C20F5ED160038AD06 /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				2313EF2D20F5ED160038AD06 /* UIImage+LL_Utils.h */,
+				2313EF2E20F5ED160038AD06 /* UIImage+LL_Utils.m */,
+			);
+			path = UIImage;
+			sourceTree = "<group>";
+		};
+		3629E3852136830A00226C79 /* DemoViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3629E38C2136830A00226C79 /* BaseTestViewController.h */,
+				3629E3862136830A00226C79 /* BaseTestViewController.m */,
+				3629E3892136830A00226C79 /* TestNetworkViewController.h */,
+				3629E38E2136830A00226C79 /* TestNetworkViewController.m */,
+				3629E3912136830A00226C79 /* TestLogViewController.h */,
+				3629E38B2136830A00226C79 /* TestLogViewController.m */,
+				3629E38F2136830A00226C79 /* TestCrashViewController.h */,
+				3629E3872136830A00226C79 /* TestCrashViewController.m */,
+				3629E3882136830A00226C79 /* TestColorStyleViewController.h */,
+				3629E3902136830A00226C79 /* TestColorStyleViewController.m */,
+				3629E38D2136830A00226C79 /* TestWindowStyleViewController.h */,
+				3629E38A2136830A00226C79 /* TestWindowStyleViewController.m */,
+			);
+			path = DemoViewControllers;
+			sourceTree = "<group>";
+		};
+		3687520F20C69B12002C6AD9 /* ScreenshotView */ = {
+			isa = PBXGroup;
+			children = (
+				3687521720C69B21002C6AD9 /* LLScreenshotDefine.h */,
+				3687521020C69B21002C6AD9 /* LLScreenshotView.h */,
+				3687521120C69B21002C6AD9 /* LLScreenshotView.m */,
+				3687521420C69B21002C6AD9 /* LLScreenshotImageView.h */,
+				3687521D20C69B22002C6AD9 /* LLScreenshotImageView.m */,
+				3687521E20C69B22002C6AD9 /* LLScreenshotToolbar.h */,
+				3687521B20C69B22002C6AD9 /* LLScreenshotToolbar.m */,
+				3687521320C69B21002C6AD9 /* LLScreenshotActionView.h */,
+				3687521220C69B21002C6AD9 /* LLScreenshotActionView.m */,
+				3687521520C69B21002C6AD9 /* LLScreenshotSelectorView.h */,
+				3687521C20C69B22002C6AD9 /* LLScreenshotSelectorView.m */,
+				3687521820C69B21002C6AD9 /* LLScreenshotSelectorModel.h */,
+				3687521920C69B22002C6AD9 /* LLScreenshotSelectorModel.m */,
+				3687521A20C69B22002C6AD9 /* LLScreenshotBaseOperation.h */,
+				3687521620C69B21002C6AD9 /* LLScreenshotBaseOperation.m */,
+			);
+			path = ScreenshotView;
+			sourceTree = "<group>";
+		};
+		369B258C212E5D5B00E771D8 /* NSHTTPURLResponse */ = {
+			isa = PBXGroup;
+			children = (
+				369B258D212E5D6700E771D8 /* NSHTTPURLResponse+LL_Utils.h */,
+				369B258E212E5D6700E771D8 /* NSHTTPURLResponse+LL_Utils.m */,
+			);
+			path = NSHTTPURLResponse;
+			sourceTree = "<group>";
+		};
+		36AE43D820C788E90066EA41 /* ScreenshotHelper */ = {
+			isa = PBXGroup;
+			children = (
+				36AE43D920C788E90066EA41 /* LLScreenshotHelper.h */,
+				36AE43DA20C788E90066EA41 /* LLScreenshotHelper.m */,
+			);
+			path = ScreenshotHelper;
+			sourceTree = "<group>";
+		};
 		36C5BEED2099897F007A3188 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +424,7 @@
 		36C5BEF02099897F007A3188 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				36AE43D820C788E90066EA41 /* ScreenshotHelper */,
 				36C5BEF12099897F007A3188 /* CrashHelper */,
 				36C5BEF42099897F007A3188 /* StorageManager */,
 				36C5BEF72099897F007A3188 /* AppHelper */,
@@ -267,6 +451,8 @@
 			children = (
 				36C5BEF62099897F007A3188 /* LLStorageManager.h */,
 				36C5BEF52099897F007A3188 /* LLStorageManager.m */,
+				362A79AD21211B8C002E06FF /* LLStorageModel.h */,
+				362A79AE21211B8C002E06FF /* LLStorageModel.m */,
 			);
 			path = StorageManager;
 			sourceTree = "<group>";
@@ -298,6 +484,7 @@
 				36C5BF032099897F007A3188 /* LLLogHelper.m */,
 				36C5BF002099897F007A3188 /* LLLogModel.h */,
 				36C5BF022099897F007A3188 /* LLLogModel.m */,
+				36B464F0210AAA2C00F72B30 /* LLLogHelperEventDefine.h */,
 			);
 			path = LogHelper;
 			sourceTree = "<group>";
@@ -435,6 +622,7 @@
 		36C5BF3E2099897F007A3188 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				3687520F20C69B12002C6AD9 /* ScreenshotView */,
 				36C5BF402099897F007A3188 /* FilterView */,
 				36C5BF592099897F007A3188 /* LLMacros.h */,
 				36C5BF3F2099897F007A3188 /* YWFilePreviewController.h */,
@@ -452,14 +640,16 @@
 			children = (
 				36C5BF502099897F007A3188 /* LabelCell */,
 				36C5BF442099897F007A3188 /* TextFieldCell */,
-				36C5BF582099897F007A3188 /* LLFilterView.h */,
-				36C5BF4E2099897F007A3188 /* LLFilterView.m */,
-				36C5BF4F2099897F007A3188 /* LLFilterLevelView.h */,
-				36C5BF412099897F007A3188 /* LLFilterLevelView.m */,
+				36C5BF582099897F007A3188 /* LLLogFilterView.h */,
+				36C5BF4E2099897F007A3188 /* LLLogFilterView.m */,
+				363FE42521196CC9005F9C0D /* LLNetworkFilterView.h */,
+				363FE42621196CC9005F9C0D /* LLNetworkFilterView.m */,
 				36C5BF432099897F007A3188 /* LLFilterEventView.h */,
 				36C5BF572099897F007A3188 /* LLFilterEventView.m */,
 				36C5BF562099897F007A3188 /* LLFilterOtherView.h */,
 				36C5BF422099897F007A3188 /* LLFilterOtherView.m */,
+				363FE42E21198AC5005F9C0D /* LLFilterDateView.h */,
+				363FE42F21198AC5005F9C0D /* LLFilterDateView.m */,
 			);
 			path = FilterView;
 			sourceTree = "<group>";
@@ -495,6 +685,9 @@
 		36C5BF5C2099897F007A3188 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				369B258C212E5D5B00E771D8 /* NSHTTPURLResponse */,
+				C41B0A0621205BD700A058CF /* NSObject */,
+				2313EF2C20F5ED160038AD06 /* UIImage */,
 				36C5BF5D2099897F007A3188 /* UIButton */,
 				36C5BF602099897F007A3188 /* UIDevice */,
 				36C5BF632099897F007A3188 /* NSString */,
@@ -578,16 +771,46 @@
 			children = (
 				36C5BF772099897F007A3188 /* LLDebugTool.h */,
 				36C5BF762099897F007A3188 /* LLDebugTool.m */,
+				365D4D7020C91B3900A5D59E /* LLDebugToolMacros.h */,
 			);
 			path = DebugTool;
+			sourceTree = "<group>";
+		};
+		36E248862123BAE300D03F44 /* LLDebugToolDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				36E248872123BAE300D03F44 /* LLDebugToolDemoTests.m */,
+				36E248892123BAE300D03F44 /* Info.plist */,
+			);
+			path = LLDebugToolDemoTests;
+			sourceTree = "<group>";
+		};
+		36E248942123BAE900D03F44 /* LLDebugToolDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				36E248952123BAE900D03F44 /* LLDebugToolDemoUITests.m */,
+				36E248972123BAE900D03F44 /* Info.plist */,
+			);
+			path = LLDebugToolDemoUITests;
 			sourceTree = "<group>";
 		};
 		5DAB3E295118238CB64A77C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				533ECC0E7675B1A81455CB56 /* libPods-LLDebugToolDemo.a */,
+				D1B877316C71C92C11DF5A9A /* libPods-LLDebugToolDemoTests.a */,
+				250A2DF7939C9F66F595658E /* libPods-LLDebugToolDemoUITests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C41B0A0621205BD700A058CF /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				C41B0A0821205BD700A058CF /* NSObject+LL_Utils.h */,
+				C41B0A0721205BD700A058CF /* NSObject+LL_Utils.m */,
+			);
+			path = NSObject;
 			sourceTree = "<group>";
 		};
 		C43BA7FE205AB095006307BE = {
@@ -595,6 +818,8 @@
 			children = (
 				C43BA820205AB0EF006307BE /* LLDebugTool */,
 				C43BA809205AB095006307BE /* LLDebugToolDemo */,
+				36E248862123BAE300D03F44 /* LLDebugToolDemoTests */,
+				36E248942123BAE900D03F44 /* LLDebugToolDemoUITests */,
 				C43BA808205AB095006307BE /* Products */,
 				E99ABDA4555CAF38A3D78EE6 /* Pods */,
 				5DAB3E295118238CB64A77C2 /* Frameworks */,
@@ -605,6 +830,8 @@
 			isa = PBXGroup;
 			children = (
 				C43BA807205AB095006307BE /* LLDebugToolDemo.app */,
+				36E248852123BAE300D03F44 /* LLDebugToolDemoTests.xctest */,
+				36E248932123BAE900D03F44 /* LLDebugToolDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -612,6 +839,9 @@
 		C43BA809205AB095006307BE /* LLDebugToolDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3629E3852136830A00226C79 /* DemoViewControllers */,
+				36A0007520BE863700AE8810 /* NetTool.h */,
+				36A0007620BE863700AE8810 /* NetTool.m */,
 				C43BA80A205AB095006307BE /* AppDelegate.h */,
 				C43BA80B205AB095006307BE /* AppDelegate.m */,
 				C43BA80D205AB095006307BE /* ViewController.h */,
@@ -622,6 +852,7 @@
 				C43BA818205AB095006307BE /* Info.plist */,
 				C43BA819205AB095006307BE /* main.m */,
 				367E27A320A1A8480032EF0D /* Localizable.strings */,
+				3691A61D20C7E63B00E22192 /* InfoPlist.strings */,
 			);
 			path = LLDebugToolDemo;
 			sourceTree = "<group>";
@@ -643,6 +874,10 @@
 			children = (
 				532D187B41D9EFF04391FD36 /* Pods-LLDebugToolDemo.debug.xcconfig */,
 				0857CAF55E62609DE772D43C /* Pods-LLDebugToolDemo.release.xcconfig */,
+				638C108F891808060C7ED772 /* Pods-LLDebugToolDemoTests.debug.xcconfig */,
+				7630F57F70FEB38A6705DA1A /* Pods-LLDebugToolDemoTests.release.xcconfig */,
+				ADC0AD5C07B446A537F680CF /* Pods-LLDebugToolDemoUITests.debug.xcconfig */,
+				34ACB65EBB30B1CA47DFC39F /* Pods-LLDebugToolDemoUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -650,6 +885,44 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		36E248842123BAE300D03F44 /* LLDebugToolDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36E2488E2123BAE300D03F44 /* Build configuration list for PBXNativeTarget "LLDebugToolDemoTests" */;
+			buildPhases = (
+				82FFC20994708CA4B72E4308 /* [CP] Check Pods Manifest.lock */,
+				36E248812123BAE300D03F44 /* Sources */,
+				36E248822123BAE300D03F44 /* Frameworks */,
+				36E248832123BAE300D03F44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				36E2488B2123BAE300D03F44 /* PBXTargetDependency */,
+			);
+			name = LLDebugToolDemoTests;
+			productName = LLDebugToolDemoTests;
+			productReference = 36E248852123BAE300D03F44 /* LLDebugToolDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		36E248922123BAE900D03F44 /* LLDebugToolDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36E2489A2123BAE900D03F44 /* Build configuration list for PBXNativeTarget "LLDebugToolDemoUITests" */;
+			buildPhases = (
+				D88507F3CEB58B2391736619 /* [CP] Check Pods Manifest.lock */,
+				36E2488F2123BAE900D03F44 /* Sources */,
+				36E248902123BAE900D03F44 /* Frameworks */,
+				36E248912123BAE900D03F44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				36E248992123BAE900D03F44 /* PBXTargetDependency */,
+			);
+			name = LLDebugToolDemoUITests;
+			productName = LLDebugToolDemoUITests;
+			productReference = 36E248932123BAE900D03F44 /* LLDebugToolDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		C43BA806205AB095006307BE /* LLDebugToolDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C43BA81D205AB095006307BE /* Build configuration list for PBXNativeTarget "LLDebugToolDemo" */;
@@ -658,8 +931,6 @@
 				C43BA803205AB095006307BE /* Sources */,
 				C43BA804205AB095006307BE /* Frameworks */,
 				C43BA805205AB095006307BE /* Resources */,
-				26F08AEA5492BC3B938C7190 /* [CP] Embed Pods Frameworks */,
-				97DC28EB89EC5A3F8BA895DC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -676,9 +947,19 @@
 		C43BA7FF205AB095006307BE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = li;
 				TargetAttributes = {
+					36E248842123BAE300D03F44 = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C43BA806205AB095006307BE;
+					};
+					36E248922123BAE900D03F44 = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C43BA806205AB095006307BE;
+					};
 					C43BA806205AB095006307BE = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
@@ -700,11 +981,27 @@
 			projectRoot = "";
 			targets = (
 				C43BA806205AB095006307BE /* LLDebugToolDemo */,
+				36E248842123BAE300D03F44 /* LLDebugToolDemoTests */,
+				36E248922123BAE900D03F44 /* LLDebugToolDemoUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		36E248832123BAE300D03F44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		36E248912123BAE900D03F44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C43BA805205AB095006307BE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -713,6 +1010,7 @@
 				367E855820A68EC100E5B472 /* LLSubTitleTableViewCell.xib in Resources */,
 				36C5BF922099897F007A3188 /* LLSandboxCell.xib in Resources */,
 				36C5BF862099897F007A3188 /* LLNetworkImageCell.xib in Resources */,
+				3691A61B20C7E63B00E22192 /* InfoPlist.strings in Resources */,
 				36C5BF972099897F007A3188 /* LLLogCell.xib in Resources */,
 				36C5BFA32099897F007A3188 /* LLFilterLabelCell.xib in Resources */,
 				C43BA817205AB095006307BE /* LaunchScreen.storyboard in Resources */,
@@ -729,21 +1027,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		26F08AEA5492BC3B938C7190 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LLDebugToolDemo/Pods-LLDebugToolDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6E3CB1D4BAA2CB6C13E12F68 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -762,50 +1045,98 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		97DC28EB89EC5A3F8BA895DC /* [CP] Copy Pods Resources */ = {
+		82FFC20994708CA4B72E4308 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LLDebugToolDemoTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LLDebugToolDemo/Pods-LLDebugToolDemo-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D88507F3CEB58B2391736619 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LLDebugToolDemoUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		36E248812123BAE300D03F44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36E248882123BAE300D03F44 /* LLDebugToolDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		36E2488F2123BAE900D03F44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36E248962123BAE900D03F44 /* LLDebugToolDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C43BA803205AB095006307BE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				C43BA80F205AB095006307BE /* ViewController.m in Sources */,
+				363FE42721196CC9005F9C0D /* LLNetworkFilterView.m in Sources */,
+				3629E3942136830A00226C79 /* TestWindowStyleViewController.m in Sources */,
 				36C5BF902099897F007A3188 /* LLSandboxCell.m in Sources */,
 				36C5BFAA2099897F007A3188 /* NSString+LL_Utils.m in Sources */,
+				3629E3932136830A00226C79 /* TestCrashViewController.m in Sources */,
 				36C5BFAD2099897F007A3188 /* LLBaseViewController.m in Sources */,
 				36C5BF9C2099897F007A3188 /* LLFilterOtherView.m in Sources */,
+				2313EF2F20F5ED170038AD06 /* UIImage+LL_Utils.m in Sources */,
+				36AE43DB20C788E90066EA41 /* LLScreenshotHelper.m in Sources */,
 				36C5BF7D2099897F007A3188 /* LLSandboxModel.m in Sources */,
+				C41B0A0921205BD700A058CF /* NSObject+LL_Utils.m in Sources */,
 				36C5BFB02099897F007A3188 /* LLDebugTool.m in Sources */,
+				3629E3922136830A00226C79 /* BaseTestViewController.m in Sources */,
 				36C5BF8E2099897F007A3188 /* LLCrashVC.m in Sources */,
 				3602DC532099C4AF00F8CE50 /* LLBaseTableViewCell.m in Sources */,
 				36C5BF7F2099897F007A3188 /* LLLogHelper.m in Sources */,
 				36C5BFA62099897F007A3188 /* LLFilterEventView.m in Sources */,
 				36C5BF842099897F007A3188 /* LLNetworkVC.m in Sources */,
+				368F9DE82119AAF4003F8264 /* LLLogFilterView.m in Sources */,
+				3687522120C69B22002C6AD9 /* LLScreenshotBaseOperation.m in Sources */,
 				36C5BF812099897F007A3188 /* LLNetworkModel.m in Sources */,
 				36C5BF9F2099897F007A3188 /* LLFilterDatePickerView.m in Sources */,
 				36C5BFAB2099897F007A3188 /* LLSearchBar.m in Sources */,
 				36C5BF912099897F007A3188 /* LLSandboxVC.m in Sources */,
-				36C5BFA22099897F007A3188 /* LLFilterView.m in Sources */,
 				36C5BF802099897F007A3188 /* LLURLProtocol.m in Sources */,
 				36C5BF932099897F007A3188 /* LLWindow.m in Sources */,
+				3687521F20C69B22002C6AD9 /* LLScreenshotView.m in Sources */,
+				362A79AF21211B8C002E06FF /* LLStorageModel.m in Sources */,
 				367F94C7209AF38300CA1821 /* LLBaseNavigationController.m in Sources */,
 				C43BA81A205AB095006307BE /* main.m in Sources */,
 				36C5BF992099897F007A3188 /* LLAppInfoVC.m in Sources */,
+				36A0007720BE863700AE8810 /* NetTool.m in Sources */,
 				36C5BFA72099897F007A3188 /* YWFilePreviewController.m in Sources */,
 				36C5BF822099897F007A3188 /* LLNetworkHelper.m in Sources */,
 				36C5BFAC2099897F007A3188 /* LLNoneCopyTextField.m in Sources */,
@@ -815,34 +1146,56 @@
 				36C5BF8D2099897F007A3188 /* LLCrashCell.m in Sources */,
 				36C5BF7E2099897F007A3188 /* LLLogModel.m in Sources */,
 				36C5BF7C2099897F007A3188 /* LLSandboxHelper.m in Sources */,
+				3687522320C69B22002C6AD9 /* LLScreenshotToolbar.m in Sources */,
 				36C5BF982099897F007A3188 /* LLLogContentVC.m in Sources */,
 				36C5BF962099897F007A3188 /* LLLogVC.m in Sources */,
+				3687522520C69B22002C6AD9 /* LLScreenshotImageView.m in Sources */,
 				C4D3B5E4209ECE76006AF138 /* NSURLSessionConfiguration+LL_Swizzling.m in Sources */,
 				36C5BFA82099897F007A3188 /* UIButton+LL_Utils.m in Sources */,
 				367E855720A68EC100E5B472 /* LLSubTitleTableViewCell.m in Sources */,
 				36C5BF7B2099897F007A3188 /* LLAppHelper.m in Sources */,
 				36C5BFAE2099897F007A3188 /* LLBaseModel.m in Sources */,
+				3629E3962136830A00226C79 /* TestNetworkViewController.m in Sources */,
 				36C5BF7A2099897F007A3188 /* LLStorageManager.m in Sources */,
 				36C5BF9E2099897F007A3188 /* LLFilterTextFieldModel.m in Sources */,
 				36C5BF9D2099897F007A3188 /* LLFilterFilePickerView.m in Sources */,
 				36C5BF882099897F007A3188 /* LLNetworkContentVC.m in Sources */,
 				36C5BF8B2099897F007A3188 /* LLCrashContentCell.m in Sources */,
+				3629E3952136830A00226C79 /* TestLogViewController.m in Sources */,
+				363FE43021198AC5005F9C0D /* LLFilterDateView.m in Sources */,
 				36C5BFA02099897F007A3188 /* LLFilterTextFieldCell.m in Sources */,
 				36C5BF942099897F007A3188 /* LLWindowViewController.m in Sources */,
 				36C5BFA92099897F007A3188 /* UIDevice+LL_Swizzling.m in Sources */,
 				36C5BFAF2099897F007A3188 /* LLTool.m in Sources */,
 				36C5BF832099897F007A3188 /* LLNetworkImageCell.m in Sources */,
+				3687522420C69B22002C6AD9 /* LLScreenshotSelectorView.m in Sources */,
 				36C5BF852099897F007A3188 /* LLNetworkCell.m in Sources */,
 				C43BA80C205AB095006307BE /* AppDelegate.m in Sources */,
+				3687522220C69B22002C6AD9 /* LLScreenshotSelectorModel.m in Sources */,
 				36C5BF8F2099897F007A3188 /* LLCrashContentVC.m in Sources */,
+				369B258F212E5D6700E771D8 /* NSHTTPURLResponse+LL_Utils.m in Sources */,
+				3629E3972136830A00226C79 /* TestColorStyleViewController.m in Sources */,
 				36C5BFA42099897F007A3188 /* LLFilterLabelCell.m in Sources */,
 				36C5BF782099897F007A3188 /* LLConfig.m in Sources */,
 				36C5BFA52099897F007A3188 /* LLFilterLabelModel.m in Sources */,
-				36C5BF9B2099897F007A3188 /* LLFilterLevelView.m in Sources */,
+				3687522020C69B22002C6AD9 /* LLScreenshotActionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		36E2488B2123BAE300D03F44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C43BA806205AB095006307BE /* LLDebugToolDemo */;
+			targetProxy = 36E2488A2123BAE300D03F44 /* PBXContainerItemProxy */;
+		};
+		36E248992123BAE900D03F44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C43BA806205AB095006307BE /* LLDebugToolDemo */;
+			targetProxy = 36E248982123BAE900D03F44 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		367E27A320A1A8480032EF0D /* Localizable.strings */ = {
@@ -852,6 +1205,15 @@
 				367E27A420A1A8490032EF0D /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		3691A61D20C7E63B00E22192 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3691A61C20C7E63B00E22192 /* en */,
+				3691A61E20C7E63D00E22192 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		C43BA810205AB095006307BE /* Main.storyboard */ = {
@@ -875,6 +1237,72 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		36E2488C2123BAE300D03F44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 638C108F891808060C7ED772 /* Pods-LLDebugToolDemoTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LLDebugToolDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = myCompany.LLDebugToolDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LLDebugToolDemo.app/LLDebugToolDemo";
+			};
+			name = Debug;
+		};
+		36E2488D2123BAE300D03F44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7630F57F70FEB38A6705DA1A /* Pods-LLDebugToolDemoTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LLDebugToolDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = myCompany.LLDebugToolDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LLDebugToolDemo.app/LLDebugToolDemo";
+			};
+			name = Release;
+		};
+		36E2489B2123BAE900D03F44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADC0AD5C07B446A537F680CF /* Pods-LLDebugToolDemoUITests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LLDebugToolDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = myCompany.LLDebugToolDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LLDebugToolDemo;
+			};
+			name = Debug;
+		};
+		36E2489C2123BAE900D03F44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34ACB65EBB30B1CA47DFC39F /* Pods-LLDebugToolDemoUITests.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LLDebugToolDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = myCompany.LLDebugToolDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LLDebugToolDemo;
+			};
+			name = Release;
+		};
 		C43BA81B205AB095006307BE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -890,6 +1318,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -897,6 +1326,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -946,6 +1376,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -953,6 +1384,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -986,13 +1418,14 @@
 			baseConfigurationReference = 532D187B41D9EFF04391FD36 /* Pods-LLDebugToolDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = LLDebugToolDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = myCompany.LLDebugToolDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = myCompany.HDB.LLDebugToolDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1004,13 +1437,14 @@
 			baseConfigurationReference = 0857CAF55E62609DE772D43C /* Pods-LLDebugToolDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = LLDebugToolDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = myCompany.LLDebugToolDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = myCompany.HDB.LLDebugToolDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1020,6 +1454,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		36E2488E2123BAE300D03F44 /* Build configuration list for PBXNativeTarget "LLDebugToolDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36E2488C2123BAE300D03F44 /* Debug */,
+				36E2488D2123BAE300D03F44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		36E2489A2123BAE900D03F44 /* Build configuration list for PBXNativeTarget "LLDebugToolDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36E2489B2123BAE900D03F44 /* Debug */,
+				36E2489C2123BAE900D03F44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C43BA802205AB095006307BE /* Build configuration list for PBXProject "LLDebugToolDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

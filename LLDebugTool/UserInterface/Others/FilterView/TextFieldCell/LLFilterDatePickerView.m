@@ -51,7 +51,7 @@
             NSMutableArray *days = [[NSMutableArray alloc] init];
             NSDate *date = [fromDate copy];
             while ([endDate timeIntervalSinceDate:date] >= 0) {
-                NSString *dateString = [[LLTool sharedTool] dayStringFromDate:date];
+                NSString *dateString = [LLTool dayStringFromDate:date];
                 if (dateString.length) {
                     [days addObject:dateString];
                 }
@@ -119,6 +119,18 @@
         title = [title stringByAppendingString:@" s"];
     }
     return title;
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    UILabel *label = (UILabel *)view;
+    if (!label) {
+        label = [[UILabel alloc] init];
+        label.font = [UIFont systemFontOfSize:18];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.adjustsFontSizeToFitWidth = YES;
+    }
+    label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+    return label;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {

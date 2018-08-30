@@ -25,12 +25,13 @@
 #import "LLLogCell.h"
 #import "LLConfig.h"
 #import "LLStorageManager.h"
-#import "LLFilterView.h"
+#import "LLLogFilterView.h"
 #import "LLMacros.h"
 #import "LLLogContentVC.h"
 #import "LLImageNameConfig.h"
 #import "LLSearchBar.h"
-#import "LLAppHelper.h"
+#import "NSObject+LL_Utils.h"
+#import "LLTool.h"
 
 static NSString *const kLogCellID = @"LLLogCell";
 
@@ -52,7 +53,7 @@ static NSString *const kLogCellID = @"LLLogCell";
 
 @property (nonatomic , copy) NSString *searchText;
 
-@property (nonatomic , strong) LLFilterView *filterView;
+@property (nonatomic , strong) LLLogFilterView *filterView;
 
 // Data
 @property (nonatomic , strong) NSArray *currentLevels;
@@ -70,7 +71,6 @@ static NSString *const kLogCellID = @"LLLogCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initial];
-    [self initFilterView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -201,6 +201,7 @@ static NSString *const kLogCellID = @"LLLogCell";
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     self.searchText = self.searchBar.text;
+    [self.filterView cancelFiltering];
     [self filterData];
     [searchBar resignFirstResponder];
     
@@ -214,7 +215,7 @@ static NSString *const kLogCellID = @"LLLogCell";
 #pragma mark - Primary
 - (void)initial {
     if (_launchDate == nil) {
-        _launchDate = [LLAppHelper sharedHelper].launchDate;
+        _launchDate = [NSObject launchDate];
     }
     
     self.dataArray = [[NSMutableArray alloc] init];
@@ -223,15 +224,16 @@ static NSString *const kLogCellID = @"LLLogCell";
     // TableView
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
-    [self.tableView registerNib:[UINib nibWithNibName:@"LLLogCell" bundle:nil] forCellReuseIdentifier:kLogCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LLLogCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellReuseIdentifier:kLogCellID];
     
     // Navigation bar item
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:kEditImageName] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:kDoneImageName] forState:UIControlStateSelected];
+    [btn setImage:[[UIImage LL_imageNamed:kEditImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [btn setImage:[[UIImage LL_imageNamed:kDoneImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
     btn.showsTouchWhenHighlighted = NO;
     btn.adjustsImageWhenHighlighted = NO;
     btn.frame = CGRectMake(0, 0, 40, 40);
+    btn.tintColor = LLCONFIG_TEXT_COLOR;
     [btn addTarget:self action:@selector(rightItemClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = item;
@@ -247,34 +249,33 @@ static NSString *const kLogCellID = @"LLLogCell";
         self.searchBar.delegate = self;
         self.navigationItem.titleView = self.searchBar;
     }
+    self.searchBar.enablesReturnKeyAutomatically = NO;
+    
     self.leftItem = self.navigationItem.leftBarButtonItem;
     self.rightItem = self.navigationItem.rightBarButtonItem;
     
     // ToolBar
     self.selectAllItem = [[UIBarButtonItem alloc] initWithTitle:@"Select All" style:UIBarButtonItemStylePlain target:self action:@selector(selectAllItemClick:)];
+    self.selectAllItem.tintColor = LLCONFIG_TEXT_COLOR;
+    
     UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.deleteItem = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteItemClick:)];
+    self.deleteItem.tintColor = LLCONFIG_TEXT_COLOR;
     self.deleteItem.enabled = NO;
+    
     [self setToolbarItems:@[self.selectAllItem,spaceItem,self.deleteItem] animated:YES];
     
+    self.navigationController.toolbar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
     
-    
-    if (LLCONFIG_CUSTOM_COLOR) {
-        self.selectAllItem.tintColor = LLCONFIG_TEXT_COLOR;
-        self.deleteItem.tintColor = LLCONFIG_TEXT_COLOR;
-        self.navigationController.toolbar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
-        btn.tintColor = LLCONFIG_TEXT_COLOR;
-        [btn setImage:[[UIImage imageNamed:kEditImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-        [btn setImage:[[UIImage imageNamed:kDoneImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateSelected];
-    }
+    [self initFilterView];
     
     [self loadData];
 }
 
 - (void)initFilterView {
     if (self.filterView == nil) {
-        self.filterView = [[LLFilterView alloc] initWithFrame:CGRectMake(0, LL_NAVIGATION_HEIGHT, LL_SCREEN_WIDTH, 40)];
+        self.filterView = [[LLLogFilterView alloc] initWithFrame:CGRectMake(0, LL_NAVIGATION_HEIGHT, LL_SCREEN_WIDTH, 40)];
         __weak typeof(self) weakSelf = self;
         self.filterView.changeBlock = ^(NSArray *levels, NSArray *events, NSString *file, NSString *func, NSDate *from, NSDate *end, NSArray *userIdentities) {
             weakSelf.currentLevels = levels;
@@ -294,12 +295,17 @@ static NSString *const kLogCellID = @"LLLogCell";
 
 - (void)loadData {
     self.searchBar.text = nil;
-    [self.totalDataArray removeAllObjects];
-    [self.totalDataArray addObjectsFromArray:[[LLStorageManager sharedManager] getAllLogModelsWithLaunchDate:_launchDate]];
-    [self.dataArray removeAllObjects];
-    [self.dataArray addObjectsFromArray:self.totalDataArray];
-    [self.filterView configWithData:self.totalDataArray];
-    [self.tableView reloadData];
+    __weak typeof(self) weakSelf = self;
+    [LLTool loadingMessage:@"Loading"];
+    [[LLStorageManager sharedManager] getModels:[LLLogModel class] launchDate:_launchDate complete:^(NSArray<LLStorageModel *> *result) {
+        [LLTool hideLoadingMessage];
+        [weakSelf.totalDataArray removeAllObjects];
+        [weakSelf.totalDataArray addObjectsFromArray:result];
+        [weakSelf.dataArray removeAllObjects];
+        [weakSelf.dataArray addObjectsFromArray:weakSelf.totalDataArray];
+        [weakSelf.filterView configWithData:weakSelf.totalDataArray];
+        [weakSelf.tableView reloadData];
+    }];
 }
 
 - (void)filterData {
@@ -311,7 +317,7 @@ static NSString *const kLogCellID = @"LLLogCell";
         for (LLLogModel *model in self.totalDataArray) {
             // Filter "Search"
             if (self.searchText.length) {
-                if (![model.message containsString:self.searchText]) {
+                if (![model.message.lowercaseString containsString:self.searchText.lowercaseString]) {
                     [tempArray addObject:model];
                     continue;
                 }
@@ -387,21 +393,26 @@ static NSString *const kLogCellID = @"LLLogCell";
 }
 
 - (void)deleteFilesWithIndexPaths:(NSArray *)indexPaths {
-    NSMutableArray *models = [[NSMutableArray alloc] init];
+    __block NSMutableArray *models = [[NSMutableArray alloc] init];
     for (NSIndexPath *indexPath in indexPaths) {
         [models addObject:self.dataArray[indexPath.row]];
     }
-    if ([[LLStorageManager sharedManager] removeLogModels:models]) {
-        [self.totalDataArray removeObjectsInArray:models];
-        [self.dataArray removeObjectsInArray:models];
-        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-    } else {
-        [self showAlertControllerWithMessage:@"Remove log model fail" handler:^(NSInteger action) {
-            if (action == 1) {
-                [self loadData];
-            }
-        }];
-    }
+    __weak typeof(self) weakSelf = self;
+    [LLTool loadingMessage:@"Deleting"];
+    [[LLStorageManager sharedManager] removeModels:models complete:^(BOOL result) {
+        [LLTool hideLoadingMessage];
+        if (result) {
+            [weakSelf.totalDataArray removeObjectsInArray:models];
+            [weakSelf.dataArray removeObjectsInArray:models];
+            [weakSelf.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            [weakSelf showAlertControllerWithMessage:@"Remove log model fail" handler:^(NSInteger action) {
+                if (action == 1) {
+                    [weakSelf loadData];
+                }
+            }];
+        }
+    }];
 }
 
 @end

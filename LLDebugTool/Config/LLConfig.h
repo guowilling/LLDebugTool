@@ -25,23 +25,25 @@
 #import <UIKit/UIKit.h>
 
 #ifndef LLCONFIG_CUSTOM_COLOR
-#define LLCONFIG_CUSTOM_COLOR ([LLConfig sharedConfig].useSystemColor == NO)
-#define LLCONFIG_TEXT_COLOR [LLConfig sharedConfig].textColor
-#define LLCONFIG_BACKGROUND_COLOR [LLConfig sharedConfig].backgroundColor
+#define LLCONFIG_CUSTOM_COLOR (YES)
 #endif
 
+#define LLCONFIG_TEXT_COLOR [LLConfig sharedConfig].textColor
+#define LLCONFIG_BACKGROUND_COLOR [LLConfig sharedConfig].backgroundColor
 
 /**
  Color style enum
-
+ 
  - LLConfigColorStyleHack: Green backgroundColor and white textColor.
  - LLConfigColorStyleSimple: White backgroundColor and darkTextColor textColor.
  - LLConfigColorStyleSystem: White backgroundColor and system tint textColor.
+ - LLConfigColorStyleCustom: Use custom backgroundColor and textColor.
  */
 typedef NS_ENUM(NSUInteger, LLConfigColorStyle) {
     LLConfigColorStyleHack,
     LLConfigColorStyleSimple,
     LLConfigColorStyleSystem,
+    LLConfigColorStyleCustom,
 };
 
 /**
@@ -58,6 +60,68 @@ typedef NS_ENUM(NSUInteger, LLConfigLogLevel) {
     LLConfigLogLevelWarning,
     LLConfigLogLevelError,
 };
+
+/**
+ Window style. Decide how the Window displays.
+
+ - LLConfigWindowSuspensionBall: Show as a suspension ball. Moveable and clickable.
+ - LLConfigWindowPowerBar: Show at power bar. Unmoveable but clickable.
+ - LLConfigWindowNetBar: Show at network bar. Unmoveable but clickable.
+ */
+typedef NS_ENUM(NSUInteger, LLConfigWindowStyle) {
+    LLConfigWindowSuspensionBall,
+    LLConfigWindowPowerBar,
+    LLConfigWindowNetBar,
+};
+
+/**
+ Log style for [LLDebugTool logInFile...]. Customize the log you want.
+
+ - LLConfigLogDetail: Show all detail info. Contain event, file, line, func, date and desc.
+ - LLConfigLogFileFuncDesc : Show with event, file, func and desc.
+ - LLConfigLogFileDesc : Show with event, file and desc.
+ - LLConfigLogNormal: Show as system NSLog
+ - LLConfigLogNone: Don't show anything.
+ */
+typedef NS_ENUM(NSUInteger, LLConfigLogStyle) {
+    LLConfigLogDetail,
+    LLConfigLogFileFuncDesc,
+    LLConfigLogFileDesc,
+    LLConfigLogNormal,
+    LLConfigLogNone,
+};
+
+/**
+ Customize available Features.
+
+ - LLConfigAvailableNetwork: Network functions available.
+ - LLConfigAvailableLog: Log functions avalable.
+ - LLConfigAvailableCrash: Crash functions available.
+ - LLConfigAvailableAppInfo: AppInfo functions available.
+ - LLConfigAvailableSandbox: Sandbox functions available.
+ - LLConfigAvailableScreenshot: Screenshot functions available.
+ - LLConfigAvailableAll: All available.
+ */
+typedef NS_OPTIONS(NSUInteger, LLConfigAvailableFeature) {
+    LLConfigAvailableNetwork    = 1 << 0,
+    LLConfigAvailableLog        = 1 << 1,
+    LLConfigAvailableCrash      = 1 << 2,
+    LLConfigAvailableAppInfo    = 1 << 3,
+    LLConfigAvailableSandbox    = 1 << 4,
+    LLConfigAvailableScreenshot = 1 << 5,
+    LLConfigAvailableAll        = 0xFF,
+    
+    // Quick options
+    LLConfigAvailableNoneNetwork    = 0xFF - (1 << 0),
+    LLConfigAvailableNoneLog        = 0xFF - (1 << 1),
+    LLConfigAvailableNoneCrash      = 0xFF - (1 << 2),
+    LLConfigAvailableNoneAppInfo    = 0xFF - (1 << 3),
+    LLConfigAvailableNoneSandbox    = 0xFF - (1 << 4),
+    LLConfigAvailableNoneScreenshot = 0xFF - (1 << 5),
+};
+
+UIKIT_EXTERN NSNotificationName _Nonnull const LLConfigDidUpdateColorStyleNotificationName;
+UIKIT_EXTERN NSNotificationName _Nonnull const LLConfigDidUpdateWindowStyleNotificationName;
 
 /**
  Config file. Must config properties before [LLDebugTool enable].
@@ -84,20 +148,14 @@ typedef NS_ENUM(NSUInteger, LLConfigLogLevel) {
 @property (assign , nonatomic) LLConfigColorStyle colorStyle;
 
 /**
- UIControl's background color. Default is [UIColor blackColor]. Set this property will also change useSystemColor to NO.
+ UIControl's background color. Default is [UIColor blackColor]..
  */
 @property (strong , nonatomic , nonnull , readonly) UIColor *backgroundColor;
 
 /**
- UIControl's text color. Default is [UIColor greenColor]. Set this property will also change useSystemColor to NO.
+ UIControl's text color. Default is [UIColor greenColor].
  */
 @property (strong , nonatomic , nonnull , readonly) UIColor *textColor;
-
-/**
- Use system color or not. If YES, window will draw by system tint color. If NO, window will draw by [backgroundColor] and [textColor].
- Default is NO.
- */
-@property (assign , nonatomic) BOOL useSystemColor;
 
 /**
  System tint color.
@@ -105,7 +163,7 @@ typedef NS_ENUM(NSUInteger, LLConfigLogLevel) {
 @property (strong , nonatomic , readonly , nonnull) UIColor *systemTintColor;
 
 /**
- Customizing the custom color configuration.
+ Customizing the custom color configuration, will auto set colorStyle to LLConfigColorStyleCustom.
  */
 - (void)configBackgroundColor:(UIColor *_Nonnull)backgroundColor textColor:(UIColor *_Nonnull)textColor statusBarStyle:(UIStatusBarStyle)statusBarStyle;
 
@@ -149,10 +207,51 @@ typedef NS_ENUM(NSUInteger, LLConfigLogLevel) {
  */
 @property (strong , nonatomic , nullable) NSArray <NSString *>*hosts;
 
+#pragma mark - Settings
+/**
+ Whether to print LLDebugTool's log event. Default is YES.
+ */
+@property (assign , nonatomic) BOOL showDebugToolLog;
+
+/**
+ Customize the log style. Default is LLConfigLogDetail.
+ */
+@property (assign , nonatomic) LLConfigLogStyle logStyle;
+
+/**
+ Window style. Decide how the Window displays. Default is LLConfigWindowSuspensionBall.
+ */
+@property (assign , nonatomic) LLConfigWindowStyle windowStyle;
+
+/**
+ Available features. Default is LLConfigAvailableAll.
+ It can affect tabbar's display and features on or off. If this value is modified at run time, will automatic called [LLDebugTool stopWorking] and [LLDebugTool startWorking] again to start or close the features, also the tabbar will be updated automatically the next time it appears.
+ */
+@property (assign , nonatomic) LLConfigAvailableFeature availables;
+
+#pragma mark - Folder Path
+/**
+ The folder path for LLDebugTool. The database is created and read in this directory.
+ Default path is ../Documents/LLDebugTool/.
+ */
+@property (copy , nonatomic , nonnull) NSString *folderPath;
+
 #pragma mark - Extension
 /**
- Image resource bundle name.
+ Image resource bundle.
  */
-@property (copy , nonatomic , readonly , nonnull) NSString *bundlePath;
+@property (strong , nonatomic , readonly , nullable) NSBundle *imageBundle;
+
+/**
+ XIB resource bundle.
+ */
+@property (strong , nonatomic , readonly , nullable) NSBundle *XIBBundle;
+
+#pragma mark - DEPRECATED
+/**
+ Use system color or not. If YES, window will draw by system tint color. If NO, window will draw by [backgroundColor] and [textColor].
+ Default is NO.
+ */
+@property (assign , nonatomic) BOOL useSystemColor DEPRECATED_MSG_ATTRIBUTE("Unsupported, Use colorStyle LLConfigColorStyleSimple replace.");;
 
 @end

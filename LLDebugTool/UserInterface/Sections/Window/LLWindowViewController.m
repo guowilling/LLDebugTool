@@ -22,27 +22,33 @@
 //  SOFTWARE.
 
 #import "LLWindowViewController.h"
-#import "LLMacros.h"
-#import "LLWindow.h"
-#import "LLCrashVC.h"
+#import "LLBaseNavigationController.h"
+#import "LLScreenshotHelper.h"
+#import "LLImageNameConfig.h"
 #import "LLNetworkVC.h"
-#import "LLLogVC.h"
 #import "LLAppInfoVC.h"
 #import "LLSandboxVC.h"
 #import "LLAppHelper.h"
+#import "LLCrashVC.h"
+#import "LLMacros.h"
+#import "LLWindow.h"
 #import "LLConfig.h"
-#import "LLImageNameConfig.h"
-#import "LLBaseNavigationController.h"
+#import "LLLogVC.h"
+#import "LLDebugTool.h"
+#import "LLDebugToolMacros.h"
+#import "LLLogHelperEventDefine.h"
 
 @interface LLWindowViewController ()
 
-@property (nonatomic , strong) UIView *sBallView;
+@property (nonatomic , strong) UIView *contentView;
 
-@property (nonatomic , strong) UILabel *topLabel;
+@property (nonatomic , strong) UILabel *memoryLabel;
 
-@property (nonatomic , strong) UILabel *bottomLabel;
+@property (nonatomic , strong) UILabel *CPULabel;
 
-@property (nonatomic , strong) UILabel *fpsLabel;
+@property (nonatomic , strong) UILabel *FPSLabel;
+
+@property (nonatomic , strong) UIView *lineView;
 
 @property (nonatomic , assign) CGFloat sBallHideWidth;
 
@@ -75,6 +81,20 @@
 }
 
 - (void)showDebugViewControllerWithIndex:(NSInteger)index {
+    if ([LLConfig sharedConfig].availables == LLConfigAvailableScreenshot) {
+        // Screenshot only. Don't open the window.
+        LLog_Event(kLLLogHelperDebugToolEvent, @"Current availables is only screenshot, can't open the tabbar.");
+        return;
+    }
+    
+    if (![LLConfig sharedConfig].XIBBundle) {
+        LLog_Warning_Event(kLLLogHelperFailedLoadingResourceEvent, [@"Failed to load the XIB bundle," stringByAppendingString:kLLLogHelperOpenIssueInGithub]);
+        return;
+    }
+    
+    if (![LLConfig sharedConfig].imageBundle) {
+        LLog_Warning_Event(kLLLogHelperFailedLoadingResourceEvent, [@"Failed to load the image bundle," stringByAppendingString:kLLLogHelperOpenIssueInGithub]);
+    }
     if ([[NSThread currentThread] isMainThread]) {
         [self.window hideWindow];
         UIViewController* vc = [[[UIApplication sharedApplication].delegate window] rootViewController];
@@ -98,9 +118,28 @@
     CGFloat cpu = [userInfo[LLAppHelperCPUKey] floatValue];
     CGFloat usedMemory = [userInfo[LLAppHelperMemoryUsedKey] floatValue];
     CGFloat fps = [userInfo[LLAppHelperFPSKey] floatValue];
-    self.topLabel.text = [NSString stringWithFormat:@"%@",[NSByteCountFormatter stringFromByteCount:usedMemory countStyle:NSByteCountFormatterCountStyleMemory]];
-    self.bottomLabel.text = [NSString stringWithFormat:@"CPU:%.2f%%",cpu];
-    self.fpsLabel.text = [NSString stringWithFormat:@"%ld",(long)fps];
+    self.memoryLabel.text = [NSString stringWithFormat:@"%@",[NSByteCountFormatter stringFromByteCount:usedMemory countStyle:NSByteCountFormatterCountStyleMemory]];
+    self.CPULabel.text = [NSString stringWithFormat:@"CPU:%.2f%%",cpu];
+    self.FPSLabel.text = [NSString stringWithFormat:@"%ld",(long)fps];
+}
+
+#pragma mark - LLConfigDidUpdateColorStyleNotification
+- (void)didReceiveLLConfigDidUpdateColorStyleNotification {
+    _contentView.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
+    _contentView.layer.borderColor = LLCONFIG_TEXT_COLOR.CGColor;
+    _memoryLabel.textColor = LLCONFIG_TEXT_COLOR;
+    _CPULabel.textColor = LLCONFIG_TEXT_COLOR;
+    _FPSLabel.backgroundColor = LLCONFIG_TEXT_COLOR;
+    _FPSLabel.textColor = LLCONFIG_BACKGROUND_COLOR;
+    _lineView.backgroundColor = LLCONFIG_TEXT_COLOR;
+}
+
+#pragma mark - LLConfigDidUpdateWindowStyleNotificationName
+- (void)didReceiveLLConfigDidUpdateWindowStyleNotification {
+    self.windowStyle = [LLConfig sharedConfig].windowStyle;
+    [self updateSettings];
+    [self updateSubViews];
+    [self updateGestureRecognizers];
 }
 
 #pragma mark - Primary
@@ -108,91 +147,137 @@
  * initial method
  */
 - (void)initial {
-    [self initialDefaultSettings];
-    self.view.frame = CGRectMake(0, 0, _sBallWidth, _sBallWidth);    
-    [self createSubView];
-    [self createGestureRecognizer];
+    [self updateSettings];
+    [self updateSubViews];
+    [self updateGestureRecognizers];
+    [self registerNotifications];
 }
 
-- (void)initialDefaultSettings {
+- (void)updateSettings {
     // Check sBallWidth
     if (_sBallWidth < 70) {
         _sBallWidth = 70;
     }
     self.sBallHideWidth = 10;
-    self.window.frame = CGRectMake(-self.sBallHideWidth, LL_SCREEN_HEIGHT / 3.0, _sBallWidth, _sBallWidth);
+    switch (self.windowStyle) {
+        case LLConfigWindowPowerBar:{
+            CGFloat width = 90;
+            CGRect rect = [UIApplication sharedApplication].statusBarFrame;
+            CGFloat gap = 0.5;
+            self.window.frame = CGRectMake(LL_SCREEN_WIDTH - width - 2, rect.origin.y + gap, width, rect.size.height - gap * 2 < 20 - gap * 2 ? 20 - gap * 2 : rect.size.height - gap * 2);
+        }
+            break;
+        case LLConfigWindowNetBar:{
+            CGFloat width = 90;
+            CGRect rect = [UIApplication sharedApplication].statusBarFrame;
+            CGFloat gap = 0.5;
+            self.window.frame = CGRectMake(gap, rect.origin.y + gap, width, rect.size.height - gap * 2 < 20 - gap * 2 ? 20 - gap * 2 : rect.size.height - gap * 2);
+        }
+            break;
+        case LLConfigWindowSuspensionBall:
+        default:{
+            self.windowStyle = LLConfigWindowSuspensionBall;
+            self.window.frame = CGRectMake(-self.sBallHideWidth, LL_SCREEN_HEIGHT / 3.0, _sBallWidth, _sBallWidth);
+        }
+            break;
+    }
+    self.view.frame = self.window.bounds;
 }
 
-- (void)createSubView {
-    // create sBallView
-    self.sBallView = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.sBallView.backgroundColor = [UIColor whiteColor];
-    self.sBallView.layer.cornerRadius = _sBallWidth / 2.0;
-    self.sBallView.layer.borderWidth = 2;
-    self.sBallView.layer.borderColor = [LLConfig sharedConfig].systemTintColor.CGColor;
-    self.sBallView.layer.masksToBounds = YES;
-    self.sBallView.alpha = [LLConfig sharedConfig].normalAlpha;
-    [self.view addSubview:self.sBallView];
+- (void)updateSubViews {
+    for (UIView *subView in self.contentView.subviews) {
+        [subView removeFromSuperview];
+    }
+    for (UIView *subView in self.view.subviews) {
+        [subView removeFromSuperview];
+    }
     
-    // create memoryLabel
-    self.topLabel = [[UILabel alloc] initWithFrame:CGRectMake(_sBallWidth / 8.0, _sBallWidth / 4.0, _sBallWidth * 3 / 4.0, _sBallWidth / 4.0)];
-    self.topLabel.textAlignment = NSTextAlignmentCenter;
-    self.topLabel.textColor = [LLConfig sharedConfig].systemTintColor;
-    self.topLabel.font = [UIFont systemFontOfSize:12];
-    self.topLabel.adjustsFontSizeToFitWidth = YES;
-    self.topLabel.text = @"loading";
-    [self.sBallView addSubview:self.topLabel];
+    // Create contentView
+    self.contentView.frame = self.view.bounds;
+    [self.view addSubview:self.contentView];
     
-    self.bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(_sBallWidth / 8.0, _sBallWidth / 2.0, _sBallWidth * 3 / 4.0, _sBallWidth / 4.0)];
-    self.bottomLabel.textAlignment = NSTextAlignmentCenter;
-    self.bottomLabel.textColor = [LLConfig sharedConfig].systemTintColor;
-    self.bottomLabel.font = [UIFont systemFontOfSize:10];
-    self.bottomLabel.adjustsFontSizeToFitWidth = YES;
-    self.bottomLabel.text = @"loading";
-    [self.sBallView addSubview:self.bottomLabel];
-    
-    self.fpsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    self.fpsLabel.center = CGPointMake(_sBallWidth * 0.85 + _sBallView.frame.origin.x, _sBallWidth * 0.15 + _sBallView.frame.origin.y);
-    self.fpsLabel.textAlignment = NSTextAlignmentCenter;
-    self.fpsLabel.backgroundColor = [LLConfig sharedConfig].systemTintColor;
-    self.fpsLabel.textColor = [UIColor whiteColor];
-    self.fpsLabel.font = [UIFont systemFontOfSize:12];
-    self.fpsLabel.adjustsFontSizeToFitWidth = YES;
-    self.fpsLabel.text = @"60";
-    self.fpsLabel.layer.cornerRadius = self.fpsLabel.frame.size.height / 2.0;
-    self.fpsLabel.layer.masksToBounds = YES;
-    [self.view addSubview:self.fpsLabel];
-    
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(_sBallWidth / 8.0, _sBallWidth / 2.0 - 0.5, _sBallWidth * 3 / 4.0, 1)];
-    line.backgroundColor = [LLConfig sharedConfig].systemTintColor;
-    [self.sBallView addSubview:line];
-    
-    if (LLCONFIG_CUSTOM_COLOR) {
-        self.sBallView.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
-        self.sBallView.layer.borderColor = LLCONFIG_TEXT_COLOR.CGColor;
-        self.topLabel.textColor = LLCONFIG_TEXT_COLOR;
-        self.bottomLabel.textColor = LLCONFIG_TEXT_COLOR;
-        line.backgroundColor = LLCONFIG_TEXT_COLOR;
-        self.fpsLabel.backgroundColor = LLCONFIG_TEXT_COLOR;
-        self.fpsLabel.textColor = LLCONFIG_BACKGROUND_COLOR;
+    // Set up views by windowStyle.
+    switch (self.windowStyle) {
+        case LLConfigWindowSuspensionBall:{
+            // Set ContentView
+            self.contentView.layer.cornerRadius = _sBallWidth / 2.0;
+            self.contentView.layer.borderWidth = 2;
+            
+            // Create memoryLabel
+            self.memoryLabel.frame = CGRectMake(_sBallWidth / 8.0, _sBallWidth / 4.0, _sBallWidth * 3 / 4.0, _sBallWidth / 4.0);
+            [self.contentView addSubview:self.memoryLabel];
+            
+            // Create CPULabel
+            self.CPULabel.frame = CGRectMake(_sBallWidth / 8.0, _sBallWidth / 2.0, _sBallWidth * 3 / 4.0, _sBallWidth / 4.0);
+            [self.contentView addSubview:self.CPULabel];
+            
+            // Create FPSLabel
+            self.FPSLabel.frame = CGRectMake(0, 0, 20, 20);
+            self.FPSLabel.center = CGPointMake(_sBallWidth * 0.85 + _contentView.frame.origin.x, _sBallWidth * 0.15 + _contentView.frame.origin.y);
+            self.FPSLabel.layer.cornerRadius = self.FPSLabel.frame.size.height / 2.0;
+            [self.view addSubview:self.FPSLabel];
+            
+            // Create Line
+            self.lineView.frame = CGRectMake(_sBallWidth / 8.0, _sBallWidth / 2.0 - 0.5, _sBallWidth * 3 / 4.0, 1);
+            [self.contentView addSubview:self.lineView];
+        }
+            break;
+        case LLConfigWindowPowerBar:
+        case LLConfigWindowNetBar:{
+            // Set ContentView
+            CGFloat gap = self.contentView.frame.size.height / 2.0;
+            self.contentView.layer.cornerRadius = gap;
+            
+            // Create memoryLabel
+            self.memoryLabel.frame = CGRectMake(gap, 0, self.contentView.frame.size.width - gap * 2, self.contentView.frame.size.height);
+            [self.contentView addSubview:self.memoryLabel];
+        }
+            break;
+        default:
+            break;
     }
 }
 
-- (void)createGestureRecognizer {
+- (void)updateGestureRecognizers {
+    for (UIGestureRecognizer *gr in self.contentView.gestureRecognizers) {
+        [self.contentView removeGestureRecognizer:gr];
+    }
+    // Pan, to moveable.
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGR:)];
-    [self.sBallView addGestureRecognizer:pan];
     
+    // Double tap, to screenshot.
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGR:)];
+    doubleTap.numberOfTapsRequired = 2;
+    
+    // Tap, to show tool view.
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGR:)];
-    [self.sBallView addGestureRecognizer:tap];
+    [tap requireGestureRecognizerToFail:doubleTap];
+    
+    [self.contentView addGestureRecognizer:tap];
+    [self.contentView addGestureRecognizer:doubleTap];
+    
+    switch (self.windowStyle) {
+        case LLConfigWindowSuspensionBall:{
+            [self.contentView addGestureRecognizer:pan];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveLLConfigDidUpdateColorStyleNotification) name:LLConfigDidUpdateColorStyleNotificationName object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveLLConfigDidUpdateWindowStyleNotification) name:LLConfigDidUpdateWindowStyleNotificationName object:nil];
 }
 
 - (void)becomeActive {
-    self.sBallView.alpha = [LLConfig sharedConfig].activeAlpha;
+    self.contentView.alpha = [LLConfig sharedConfig].activeAlpha;
 }
 
 - (void)resignActive {
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:2.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.sBallView.alpha = [LLConfig sharedConfig].normalAlpha;
+        self.contentView.alpha = [LLConfig sharedConfig].normalAlpha;
         // Calculate End Point
         CGFloat x = self.window.center.x;
         CGFloat y = self.window.center.y;
@@ -228,8 +313,8 @@
         
         CGFloat horizontalPer = x1 < x ? 0.15 : 0.85;
         CGFloat verticalPer = endPoint.y > self.sBallWidth ? 0.15 : 0.85;
-        CGPoint fpsCenter = CGPointMake(self.sBallWidth * horizontalPer + self.sBallView.frame.origin.x, self.sBallWidth * verticalPer + self.sBallView.frame.origin.y);
-        self.fpsLabel.center = fpsCenter;
+        CGPoint fpsCenter = CGPointMake(self.sBallWidth * horizontalPer + self.contentView.frame.origin.x, self.sBallWidth * verticalPer + self.contentView.frame.origin.y);
+        self.FPSLabel.center = fpsCenter;
     } completion:^(BOOL finished) {
         
     }];
@@ -249,10 +334,21 @@
     self.window.center = CGPointMake(point.x, point.y);
 }
 
+// Fix the bug of missing status bars under ios9.
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return [LLConfig sharedConfig].statusBarStyle;
+}
+
+// TODO: Know why does this method affect the statusBar for keywindow.
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 #pragma mark - Action
 - (void)panGR:(UIPanGestureRecognizer *)gr {
     if ([LLConfig sharedConfig].suspensionBallMoveable) {
-        CGPoint panPoint = [gr locationInView:[[UIApplication sharedApplication] keyWindow]];
+        UIWindow *window = [UIApplication sharedApplication].delegate.window;
+        CGPoint panPoint = [gr locationInView:window];
         if (gr.state == UIGestureRecognizerStateBegan)
         {
             [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resignActive) object:nil];
@@ -269,6 +365,10 @@
     [self showDebugViewControllerWithIndex:0];
 }
 
+- (void)doubleTapGR:(UITapGestureRecognizer *)gr {
+    [[LLScreenshotHelper sharedHelper] simulateTakeScreenshot];
+}
+
 #pragma mark - Lazy load
 - (UITabBarController *)tabVC {
     if (_tabVC == nil) {
@@ -276,43 +376,120 @@
         
         LLNetworkVC *networkVC = [[LLNetworkVC alloc] initWithStyle:UITableViewStyleGrouped];
         UINavigationController *networkNav = [[LLBaseNavigationController alloc] initWithRootViewController:networkVC];
-        networkNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Network" image:[UIImage imageNamed:kNetworkImageName] selectedImage:nil];
+        networkNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Network" image:[UIImage LL_imageNamed:kNetworkImageName] selectedImage:nil];
+        networkNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
+        networkNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
         
         LLLogVC *logVC = [[LLLogVC alloc] initWithStyle:UITableViewStylePlain];
         UINavigationController *logNav = [[LLBaseNavigationController alloc] initWithRootViewController:logVC];
-        logNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Log" image:[UIImage imageNamed:kLogImageName] selectedImage:nil];
+        logNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Log" image:[UIImage LL_imageNamed:kLogImageName] selectedImage:nil];
+        logNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
+        logNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
         
         LLCrashVC *crashVC = [[LLCrashVC alloc] initWithStyle:UITableViewStyleGrouped];
         UINavigationController *crashNav = [[LLBaseNavigationController alloc] initWithRootViewController:crashVC];
-        crashNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Crash" image:[UIImage imageNamed:kCrashImageName] selectedImage:nil];
+        crashNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Crash" image:[UIImage LL_imageNamed:kCrashImageName] selectedImage:nil];
+        crashNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
+        crashNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
         
         LLAppInfoVC *appInfoVC = [[LLAppInfoVC alloc] initWithStyle:UITableViewStyleGrouped];
         UINavigationController *appInfoNav = [[LLBaseNavigationController alloc] initWithRootViewController:appInfoVC];
-        appInfoNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"App" image:[UIImage imageNamed:kAppImageName] selectedImage:nil];
+        appInfoNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"App" image:[UIImage LL_imageNamed:kAppImageName] selectedImage:nil];
+        appInfoNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
+        appInfoNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
         
         LLSandboxVC *sandboxVC = [[LLSandboxVC alloc] initWithStyle:UITableViewStyleGrouped];
         UINavigationController *sandboxNav = [[LLBaseNavigationController alloc] initWithRootViewController:sandboxVC];
-        sandboxNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Sandbox" image:[UIImage imageNamed:kSandboxImageName] selectedImage:nil];
+        sandboxNav.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Sandbox" image:[UIImage LL_imageNamed:kSandboxImageName] selectedImage:nil];
+        sandboxNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
+        sandboxNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
         
-        tab.viewControllers = @[networkNav,logNav,crashNav,appInfoNav,sandboxNav];
-
-        if (LLCONFIG_CUSTOM_COLOR) {
-            crashNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
-            crashNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
-            networkNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
-            networkNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
-            logNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
-            logNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
-            appInfoNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
-            appInfoNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
-            sandboxNav.navigationBar.tintColor = LLCONFIG_TEXT_COLOR;
-            sandboxNav.navigationBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
-            tab.tabBar.tintColor = LLCONFIG_TEXT_COLOR;
-            tab.tabBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
+        NSMutableArray *viewControllers = [[NSMutableArray alloc] init];
+        LLConfigAvailableFeature availables = [LLConfig sharedConfig].availables;
+        if (availables & LLConfigAvailableNetwork) {
+            [viewControllers addObject:networkNav];
         }
+        if (availables & LLConfigAvailableLog) {
+            [viewControllers addObject:logNav];
+        }
+        if (availables & LLConfigAvailableCrash) {
+            [viewControllers addObject:crashNav];
+        }
+        if (availables & LLConfigAvailableAppInfo) {
+            [viewControllers addObject:appInfoNav];
+        }
+        if (availables & LLConfigAvailableSandbox) {
+            [viewControllers addObject:sandboxNav];
+        }
+        if (viewControllers.count == 0) {
+            [LLConfig sharedConfig].availables = LLConfigAvailableAll;
+            [viewControllers addObjectsFromArray:@[networkNav,logNav,crashNav,appInfoNav,sandboxNav]];
+        }
+        
+        tab.viewControllers = viewControllers;
+        tab.tabBar.tintColor = LLCONFIG_TEXT_COLOR;
+        tab.tabBar.barTintColor = LLCONFIG_BACKGROUND_COLOR;
+        
         _tabVC = tab;
     }
     return _tabVC;
+}
+
+- (UIView *)contentView {
+    if (!_contentView) {
+        _contentView = [[UIView alloc] init];
+        _contentView.backgroundColor = LLCONFIG_BACKGROUND_COLOR;
+        _contentView.layer.borderColor = LLCONFIG_TEXT_COLOR.CGColor;
+        _contentView.layer.masksToBounds = YES;
+        _contentView.alpha = [LLConfig sharedConfig].normalAlpha;
+    }
+    return _contentView;
+}
+
+- (UILabel *)memoryLabel {
+    if (!_memoryLabel) {
+        _memoryLabel = [[UILabel alloc] init];
+        _memoryLabel.textAlignment = NSTextAlignmentCenter;
+        _memoryLabel.textColor = LLCONFIG_TEXT_COLOR;
+        _memoryLabel.font = [UIFont systemFontOfSize:12];
+        _memoryLabel.adjustsFontSizeToFitWidth = YES;
+        _memoryLabel.text = @"loading";
+    }
+    return _memoryLabel;
+}
+
+- (UILabel *)CPULabel {
+    if (!_CPULabel) {
+        _CPULabel = [[UILabel alloc] init];
+        _CPULabel.textAlignment = NSTextAlignmentCenter;
+        _CPULabel.textColor = LLCONFIG_TEXT_COLOR;
+        _CPULabel.font = [UIFont systemFontOfSize:10];
+        _CPULabel.adjustsFontSizeToFitWidth = YES;
+        _CPULabel.text = @"loading";
+    }
+    return _CPULabel;
+}
+
+- (UILabel *)FPSLabel {
+    if (!_FPSLabel) {
+        _FPSLabel = [[UILabel alloc] init];
+        _FPSLabel.textAlignment = NSTextAlignmentCenter;
+        _FPSLabel.backgroundColor = LLCONFIG_TEXT_COLOR;
+        _FPSLabel.textColor = LLCONFIG_BACKGROUND_COLOR;
+        _FPSLabel.font = [UIFont systemFontOfSize:12];
+        _FPSLabel.adjustsFontSizeToFitWidth = YES;
+        _FPSLabel.text = @"60";
+        _FPSLabel.layer.masksToBounds = YES;
+    }
+    return _FPSLabel;
+}
+
+- (UIView *)lineView {
+    if (!_lineView) {
+        _lineView = [[UIView alloc] init];
+        _lineView.backgroundColor = LLCONFIG_TEXT_COLOR;
+    }
+    return _lineView;
 }
 
 @end

@@ -25,11 +25,13 @@
 #import "LLSubTitleTableViewCell.h"
 #import "LLNetworkImageCell.h"
 #import "LLConfig.h"
+#import "LLTool.h"
+#import "UIImage+LL_Utils.h"
 
 static NSString *const kNetworkContentCellID = @"NetworkContentCellID";
 static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
 
-@interface LLNetworkContentVC ()
+@interface LLNetworkContentVC () <LLSubTitleTableViewCellDelegate>
 
 @property (nonatomic , strong) NSMutableArray *titleArray;
 
@@ -56,7 +58,11 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
     // Config Image
     if ([obj isKindOfClass:[NSData class]] && self.model.isImage) {
         LLNetworkImageCell *cell = [tableView dequeueReusableCellWithIdentifier:kNetworkImageCellID forIndexPath:indexPath];
-        [cell setUpImage:[UIImage imageWithData:obj]];
+        if (self.model.isGif) {
+            [cell setUpImage:[UIImage LL_imageWithGIFData:obj]];
+        } else {
+            [cell setUpImage:[UIImage imageWithData:obj]];
+        }
         return cell;
     }
     if ([obj isKindOfClass:[NSData class]]) {
@@ -66,7 +72,8 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
     LLSubTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kNetworkContentCellID];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = self.titleArray[indexPath.row];
-    cell.contentLabel.text = obj;
+    cell.contentText = obj;
+    cell.delegate = self;
     return cell;
 }
 
@@ -75,17 +82,30 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
     if ([self.canCopyArray containsObject:title]) {
         id obj = self.contentArray[indexPath.row];
         if ([obj isKindOfClass:[NSData class]] && self.model.isImage) {
-            UIImage *image = [UIImage imageWithData:obj];
-            [UIPasteboard generalPasteboard].image = image;
-        } else {
+            UIImage *image = nil;
+            if (self.model.isGif) {
+                image = [UIImage LL_imageWithGIFData:obj];
+            } else {
+                image = [UIImage imageWithData:obj];
+            }
+            if ([image isKindOfClass:[UIImage class]]) {
+                [[UIPasteboard generalPasteboard] setImage:image];
+                [self toastMessage:[NSString stringWithFormat:@"Copy \"%@\" Success",title]];
+            }
+        } else if ([obj isKindOfClass:[NSData class]] || [obj isKindOfClass:[NSString class]]) {
             if ([obj isKindOfClass:[NSData class]]) {
                 obj = [self convertDataToHexStr:obj];
             }
-            [UIPasteboard generalPasteboard].string = obj;
+            [[UIPasteboard generalPasteboard] setString:obj];
+            [self toastMessage:[NSString stringWithFormat:@"Copy \"%@\" Success",title]];
         }
-        [self toastMessage:[NSString stringWithFormat:@"Copy \"%@\" Success",title]];
     }
+}
 
+#pragma mark - LLSubTitleTableViewCellDelegate
+- (void)LLSubTitleTableViewCell:(LLSubTitleTableViewCell *)cell didSelectedContentView:(UITextView *)contentTextView {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
 }
 
 #pragma mark - Primary
@@ -94,8 +114,8 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
  */
 - (void)initial {
     self.navigationItem.title = @"Details";
-    [self.tableView registerNib:[UINib nibWithNibName:@"LLNetworkImageCell" bundle:nil] forCellReuseIdentifier:kNetworkImageCellID];
-    [self.tableView registerNib:[UINib nibWithNibName:@"LLSubTitleTableViewCell" bundle:nil] forCellReuseIdentifier:kNetworkContentCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LLNetworkImageCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellReuseIdentifier:kNetworkImageCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LLSubTitleTableViewCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellReuseIdentifier:kNetworkContentCellID];
     [self loadData];
 }
 
@@ -124,9 +144,9 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
             }
             [self.contentArray addObject:string];
         }
-        if (self.model.mineType) {
-            [self.titleArray addObject:@"Mine Type"];
-            [self.contentArray addObject:self.model.mineType];
+        if (self.model.mimeType) {
+            [self.titleArray addObject:@"Mime Type"];
+            [self.contentArray addObject:self.model.mimeType];
         }
         if (self.model.startDate) {
             [self.titleArray addObject:@"Start Date"];
@@ -136,6 +156,10 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
             [self.titleArray addObject:@"Total Duration"];
             [self.contentArray addObject:self.model.totalDuration];
         }
+        if (self.model.totalDataTraffic) {
+            [self.titleArray addObject:@"Data Traffic"];
+            [self.contentArray addObject:[NSString stringWithFormat:@"%@ (%@↑ / %@↓)",self.model.totalDataTraffic,self.model.requestDataTraffic,self.model.responseDataTraffic]];
+        }
         
         [self.titleArray addObject:@"Request Body"];
         [self.contentArray addObject:self.model.requestBody ?: @"Null"];
@@ -144,11 +168,9 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
             if (self.model.isImage) {
                 [self.contentArray addObject:self.model.responseData];
             } else {
-                [self.contentArray addObject:[self prettyJSONStringFromData:self.model.responseData] ?: self.model.responseData];
+                [self.contentArray addObject:self.model.responseString.length ? self.model.responseString : self.model.responseData];
             }
         }
-        
-
     }
 }
 
@@ -157,25 +179,6 @@ static NSString *const kNetworkImageCellID = @"NetworkImageCellID";
         _canCopyArray = @[@"Request Url",@"Request Body",@"Response Body"];
     }
     return _canCopyArray;
-}
-
-- (NSString *)prettyJSONStringFromData:(NSData *)data
-{
-    if ([data length] == 0) {
-        return nil;
-    }
-    NSString *prettyString = nil;
-    
-    id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-    if ([NSJSONSerialization isValidJSONObject:jsonObject]) {
-        prettyString = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:NULL] encoding:NSUTF8StringEncoding];
-        // NSJSONSerialization escapes forward slashes. We want pretty json, so run through and unescape the slashes.
-        prettyString = [prettyString stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
-    } else {
-        prettyString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    }
-    
-    return prettyString;
 }
 
 - (NSString *)convertDataToHexStr:(NSData *)data

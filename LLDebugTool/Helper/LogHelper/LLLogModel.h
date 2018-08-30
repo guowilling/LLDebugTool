@@ -21,13 +21,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import "LLBaseModel.h"
+#import "LLStorageModel.h"
 #import "LLLogHelper.h"
 
 /**
  Log model. Save and show log infos.
  */
-@interface LLLogModel : LLBaseModel
+@interface LLLogModel : LLStorageModel
 
 /**
  File name.
@@ -79,6 +79,7 @@
  */
 @property (nonatomic , copy , readonly , nonnull) NSString *identity;
 
+#pragma mark - Quick Getter
 /**
  Convent [level] to NSString.
  */

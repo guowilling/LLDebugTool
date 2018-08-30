@@ -26,7 +26,7 @@
 
 static NSString *const kLogContentCellID = @"LogContentCellID";
 
-@interface LLLogContentVC ()
+@interface LLLogContentVC () <LLSubTitleTableViewCellDelegate>
 
 @property (nonatomic , strong) NSMutableArray *titleArray;
 
@@ -53,7 +53,8 @@ static NSString *const kLogContentCellID = @"LogContentCellID";
     LLSubTitleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kLogContentCellID];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = self.titleArray[indexPath.row];
-    cell.contentLabel.text = content;
+    cell.contentText = content;
+    cell.delegate = self;
     return cell;
 }
 
@@ -66,13 +67,19 @@ static NSString *const kLogContentCellID = @"LogContentCellID";
     }
 }
 
+#pragma mark - LLSubTitleTableViewCellDelegate
+- (void)LLSubTitleTableViewCell:(LLSubTitleTableViewCell *)cell didSelectedContentView:(UITextView *)contentTextView {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+}
+
 #pragma mark - Primary
 /**
  * initial method
  */
 - (void)initial {
     self.navigationItem.title = @"Details";
-    [self.tableView registerNib:[UINib nibWithNibName:@"LLSubTitleTableViewCell" bundle:nil] forCellReuseIdentifier:kLogContentCellID];
+    [self.tableView registerNib:[UINib nibWithNibName:@"LLSubTitleTableViewCell" bundle:[LLConfig sharedConfig].XIBBundle] forCellReuseIdentifier:kLogContentCellID];
     [self loadData];
 }
 

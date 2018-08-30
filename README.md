@@ -3,25 +3,59 @@
 </p>
 
 [![Version](https://img.shields.io/badge/IOS-%3E%3D8.0-f07e48.svg)](https://img.shields.io/badge/IOS-%3E%3D8.0-f07e48.svg)
-[![CocoaPods Compatible](https://img.shields.io/badge/pod-v1.0.2-blue.svg)](https://img.shields.io/badge/pod-v1.0.2-blue.svg)
+[![CocoaPods Compatible](https://img.shields.io/badge/pod-v1.1.5-blue.svg)](https://img.shields.io/badge/pod-v1.1.5-blue.svg)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://img.shields.io/badge/platform-ios-lightgrey.svg)
 [![License](https://img.shields.io/badge/license-MIT-91bc2b.svg)](https://img.shields.io/badge/license-MIT-91bc2b.svg)
+[![Language](https://img.shields.io/badge/Language-Objective--C-yellow.svg)](https://img.shields.io/badge/Language-Objective--C-yellow.svg)
+[![Twitter](https://img.shields.io/badge/twitter-@HdbLi-1DA1F2.svg)](https://twitter.com/HdbLi)
 
-[中文简介](https://github.com/HDB-Li/LLDebugTool/blob/master/README-cn.md)
+## Introduction
+
+[点击查看中文简介](https://github.com/HDB-Li/LLDebugTool/blob/master/README-cn.md)
 
 LLDebugTool is a debugging tool for developers and testers that can help you analyze and manipulate data in non-xcode situations.
 
 Choose LLDebugTool for your next project, or migrate over your existing projects—you'll be happy you did!
 
-<div align="center">
-<img src="https://github.com/HDB-Li/HDBImageRepository/blob/master/LLDebugTool/screenGif.gif" width="15%"></img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-1.png" width="15%"></img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-3.png" width="15%"> </img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-4.png" width="15%"> </img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-5.png" width="15%"> </img>
-<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-6.png" width="15%"> </img>
+#### Gif
+
+<div align="left">
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/screenGif.gif" width="20%"></img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenGif-Screenshot.gif" width="20%"></img>
 </div>
 
+#### ScreenShots
+
+<div align="left">
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-1.png" width="18%"></img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-3.png" width="18%"> </img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-4.png" width="18%"> </img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-5.png" width="18%"> </img>
+<img src="https://raw.githubusercontent.com/HDB-Li/HDBImageRepository/master/LLDebugTool/ScreenShot-6.png" width="18%"> </img>
+</div>
+
+## Recent updates (1.1.5)
+
+###  Start/stop function module dynamically
+
+Add a options `LLConfigAvailableFeature` in `LLConfig` used to control whether to enable ` LLDebugTool` one of function module, now you can dynamically start/stop a module. More changes can be viewed in [Version 1.1.5 Project](https://github.com/HDB-Li/LLDebugTool/projects/4).
+
+#### Add
+
+* Add a options `LLConfigAvailableFeature` in `LLConfig` used to control whether to enable ` LLDebugTool` one of function module, now you can dynamically start/stop a module.
+* Add enumeration values `LLConfigLogFileFuncDesc` and `LLConfigLogFileDesc` in `LLConfigLogStyle`.
+
+#### Update
+
+* Update `LLAppHelper` and `LLConfig`, Cleaner code.
+* Update `LLConfig`, now you can dynamic change `colorStyle` and `windowStyle` in running, See demo for more effects.
+* Update `LLSubTitleTableViewCell` to fix UITextView bug under ios 8.
+
+#### Extra
+
+* Update demo file, It looks more comfortable now.
+        
 ## What can you do with LLDebugTool?
 
 - Always check the network request or view log information for certain events without having to run under XCode. This is useful in solving the testers' problems..
@@ -42,9 +76,21 @@ Choose LLDebugTool for your next project, or migrate over your existing projects
 
 [CocoaPods](http://cocoapods.org) is the recommended way to add `LLDebugTool` to your project.
 
-1. Add a pod entry for LLDebugTool to your Podfile `pod 'LLDebugTool'`,If only you want to use it only in Debug mode, Add a pod entry for LLDebugTool to your Podfile `pod 'LLDebugTool' ,:configurations => ['Debug']`.
-2. Install the pod(s) by running `pod install`. If you can't search `LLDebugTool`, running `pod repo update` before `pod install`.
+1. Add a pod entry for LLDebugTool to your Podfile `pod 'LLDebugTool' , '~> 1.0.0'`, If only you want to use it only in Debug mode, Add a pod entry for LLDebugTool to your Podfile `pod 'LLDebugTool' , '~> 1.0.0' ,:configurations => ['Debug']`, Details also see [Wiki/Use in Debug environment](https://github.com/HDB-Li/LLDebugTool/wiki/Use-in-Debug-environment). If you want to specify the version, use as `pod 'LLDebugTool' , '1.1.5' ,:configurations => ['Debug']`.
+2. Install the pod(s) by running `pod install`. If you can't search `LLDebugTool` or you can't find the newest release version, running `pod repo update` before `pod install`.
 3. Include LLDebugTool wherever you need it with `#import "LLDebug.h"` or you can write `#import "LLDebug.h"` in your .pch  in your .pch file.
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+1. To integrate LLDebugTool into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "LLDebugTool"
+```
+
+2. Run `carthage` to build the framework and drag the built `LLDebugTool.framework` into your Xcode project.
 
 ### Source files
 
@@ -126,7 +172,6 @@ Print and save a log. More log macros details see [LLLogHelper.h](https://github
 ```
 #import "LLDebug.h"
 
-- (void)test
 - (void)testEventErrorLog {
     // Insert an LLog_Error_Event where you want to print an event and level log.
     LLog_Error_Event(@"The event that you want to mark. such as bugA, taskB or processC.",@"Message you want to save or print.");
@@ -151,7 +196,8 @@ LLDebugTool provides a quick way to view and manipulate sandbox, you can easily 
 
 ### More Usage
 
-You can download and run the ["LLDebugToolDemo"](https://github.com/HDB-Li/LLDebugTool/archive/master.zip) to find more use with LLDebugTool. The demo is build under XCode9.3, ios 11.3 and cocoapods 1.5.0. If there is any version compatibility problem, please let me know.
+* You can get more help by looking at the [Wiki](https://github.com/HDB-Li/LLDebugTool/wiki).
+* You can download and run the [LLDebugToolDemo](https://github.com/HDB-Li/LLDebugTool/archive/master.zip) to find more use with LLDebugTool. The demo is build under XCode9.3, ios 11.3 and cocoapods 1.5.0. If there is any version compatibility problem, please let me know.
 
 ## Requirements
 
@@ -162,6 +208,8 @@ LLDebugTool works on iOS 8+ and requires ARC to build. It depends on the followi
 * `Foundation`
 
 * `SystemConfiguration`
+
+* `Photos`
 
 * `malloc`
 
@@ -221,8 +269,9 @@ LLDebugTool works on iOS 8+ and requires ARC to build. It depends on the followi
 
 ## Contact
 
+- Send email to [llworkinggroup1992@gmail.com](llworkinggroup1992@gmail.com)
+- Send message in twitter [@HdbLi](https://twitter.com/HdbLi)
 - Send message in [JianShu](https://www.jianshu.com/u/a3c82fae85be)
-- Send email to [llworkinggroup@qq.com](llworkinggroup@qq.com)
 
 ## Change-log
 
