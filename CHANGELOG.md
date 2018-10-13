@@ -1,3 +1,55 @@
+## [1.2.1](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.2.1) (10/10/2018)
+
+###  Fix a display bug.
+
+`LLDebugTool` supports component-based now. Now you can integrate only one or more modules into your own **Debug debugger**. You can directly use the view controller contained in each module, or just call the functions in `Function` folder and build UI yourself.
+
+How to use components, see Wiki[Use Components](https://github.com/HDB-Li/LLDebugTool/wiki/Use-Components) or [Adding LLDebugTool to your project](https://github.com/HDB-Li/LLDebugTool#adding-lldebugtool-to-your-project).
+
+More changes can be viewed in [Version 1.2.1 Project](https://github.com/HDB-Li/LLDebugTool/projects/7).
+
+#### Update
+
+* Update `LLFilterEventView.m` and add a default averageCount to fix FilterView showing incomplete questions.
+
+## [1.2.0](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.2.0) (09/22/2018)
+
+###  Supports component-based.
+
+`LLDebugTool` supports component-based now. Now you can integrate only one or more modules into your own **Debug debugger**. You can directly use the view controller contained in each module, or just call the functions in `Function` folder and build UI yourself.
+
+How to use components, see Wiki[Use Components](https://github.com/HDB-Li/LLDebugTool/wiki/Use-Components) or [Adding LLDebugTool to your project](https://github.com/HDB-Li/LLDebugTool#adding-lldebugtool-to-your-project).
+
+More changes can be viewed in [Version 1.2.0 Project](https://github.com/HDB-Li/LLDebugTool/projects/7).
+
+#### Add
+
+* Add `LLRoute`, In order to solve mutual reference between components. When the relevant components exist, `LLRoute` will call the corresponding method, otherwise it will not do anything.
+
+#### Update
+
+* Update folder structure. Now the whole project is classified according to the components, Under each component folder, it is divided into `Function` and `UserInterface`.
+
+* Modify files referenced between components instead of `LLRoute`.
+
+* Update `NSURLSessionConfiguration.m` to hook protocolClasses method.
+
+## [1.1.7](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.1.7) (09/14/2018)
+
+###  Support Swift now, More swift usage informations see [LLDebugToolSwift](https://github.com/HDB-Li/LLDebugToolSwift).
+
+`LLDebugToolSwift` is a swift component for `LLDebugTool`, It provide the `LLog` swift class that used to log function in swift.
+
+More changes can be viewed in [Version 1.1.7 Project](https://github.com/HDB-Li/LLDebugTool/projects/6).
+
+#### Add
+
+* Add `LLog.swift`, In order to solve `LLDebugToolMacros` can't work in swift.
+
+#### Update
+
+* Update `LLCrashHelper`, now `LLDebugTool` can crash signal correct.
+
 ## [1.1.6](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.1.6) (08/31/2018)
 
 ###  Fixed bug that could not catch crash information

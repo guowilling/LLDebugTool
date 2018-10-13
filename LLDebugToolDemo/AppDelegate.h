@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  LLDebugToolDemo
 //
-//  Created by liuling on 2018/3/15.
+//  Created by Li on 2018/3/15.
 //  Copyright © 2018年 li. All rights reserved.
 //
 
@@ -11,7 +11,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
 
 @end
 
