@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = "LLDebugTool"
-  s.version             = "1.2.1"
+  s.version             = "1.3.8"
   s.summary             = "LLDebugTool is a debugging tool for developers and testers that can help you analyze and manipulate data in non-xcode situations."
   s.homepage            = "https://github.com/HDB-Li/LLDebugTool"
   s.license             = "MIT"
@@ -9,65 +9,117 @@ Pod::Spec.new do |s|
   s.platform            = :ios, "8.0"
   s.source              = { :git => "https://github.com/HDB-Li/LLDebugTool.git", :tag => s.version }
   s.requires_arc        = true
-  s.public_header_files = "LLDebugTool/**/*.h"
-  s.source_files	    = "LLDebugTool/**/*.{h,m}"
-  s.resources		    = "LLDebugTool/**/*.{xib,storyboard,bundle}"
-#  s.dependency            "FMDB"
 
   s.subspec 'Network' do |ss|
-    ss.source_files             = "LLDebugTool/Components/Network/**/*.{h,m}"
-    ss.resources                = "LLDebugTool/Components/Network/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Components/Network/**/*.h"
-    ss.dependency                 "LLDebugTool/StorageManager"
-  end
+    ss.public_header_files      = "LLDebugTool/Core/Component/Network/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Network/**/*.{h,m}"
+    ss.frameworks               = "SystemConfiguration", "CoreTelephony"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_NETWORK=1'}
+    ss.dependency                 "LLDebugTool/Storage"
+ end
 
   s.subspec 'Log' do |ss|
-    ss.source_files             = "LLDebugTool/Components/Log/**/*.{h,m}"
-    ss.resources                = "LLDebugTool/Components/Log/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Components/Log/**/*.h"
-    ss.dependency                 "LLDebugTool/StorageManager"
+    ss.public_header_files      = "LLDebugTool/Core/Component/Log/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Log/**/*.{h,m}"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_LOG=1'}
+    ss.dependency                 "LLDebugTool/Storage"
   end
-
+  
   s.subspec 'Crash' do |ss|
-    ss.source_files             = "LLDebugTool/Components/Crash/**/*.{h,m}"
-    ss.resources                = "LLDebugTool/Components/Crash/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Components/Crash/**/*.h"
-    ss.dependency                 "LLDebugTool/StorageManager"
+    ss.public_header_files      = "LLDebugTool/Core/Component/Crash/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Crash/**/*.{h,m}"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_CRASH=1'}
+    ss.dependency                 "LLDebugTool/Storage"
   end
 
   s.subspec 'AppInfo' do |ss|
-    ss.source_files             = "LLDebugTool/Components/AppInfo/**/*.{h,m}"
-#    ss.resources                = "LLDebugTool/Components/AppInfo/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Components/AppInfo/**/*.h"
-    ss.dependency                 "LLDebugTool/General"
+    ss.public_header_files      = "LLDebugTool/Core/Component/AppInfo/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/AppInfo/**/*.{h,m}"
+    ss.frameworks               = "SystemConfiguration"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_APP_INFO=1'}
+    ss.dependency                 "LLDebugTool/Core"
   end
-
+  
   s.subspec 'Sandbox' do |ss|
-    ss.source_files             = "LLDebugTool/Components/Sandbox/**/*.{h,m}"
-    ss.resources                = "LLDebugTool/Components/Sandbox/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Components/Sandbox/**/*.h"
-    ss.dependency                 "LLDebugTool/General"
+    ss.public_header_files      = "LLDebugTool/Core/Component/Sandbox/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Sandbox/**/*.{h,m}"
+    ss.frameworks               = "QuickLook", "WebKit", "AVKit"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_SANDBOX=1'}
+    ss.dependency                 "LLDebugTool/Core"
   end
-
+  
   s.subspec 'Screenshot' do |ss|
-    ss.source_files             = "LLDebugTool/Components/Screenshot/**/*.{h,m}"
-#    ss.resources                = "LLDebugTool/Components/Screenshot/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Components/Screenshot/**/*.h"
-    ss.dependency                 "LLDebugTool/General"
+    ss.public_header_files      = "LLDebugTool/Core/Component/Screenshot/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Screenshot/**/*.{h,m}"
+    ss.frameworks               = "Photos"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_SCREENSHOT=1'}
+    ss.dependency                 "LLDebugTool/Core"
   end
-
-  s.subspec 'StorageManager' do |ss|
-    ss.source_files             = "LLDebugTool/Components/StorageManager/**/*.{h,m}"
-#    ss.resources               = "LLDebugTool/Components/StorageManager/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Components/StorageManager/**/*.h"
-    ss.dependency                 "FMDB"
-    ss.dependency                 "LLDebugTool/General"
+  
+  s.subspec 'Hierarchy' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Component/Hierarchy/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Hierarchy/**/*.{h,m}"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_HIERARCHY=1'}
+    ss.dependency                 "LLDebugTool/Core"
   end
-
-  s.subspec 'General' do |ss|
-    ss.source_files             = "LLDebugTool/Config/*.{h,m}" , "LLDebugTool/Components/General/**/*.{h,m}"
-    ss.resources                = "LLDebugTool/Components/General/**/*.{xib,storyboard,bundle}"
-    ss.public_header_files      = "LLDebugTool/Config/*.h" , "LLDebugTool/Components/General/**/*.h"
+  
+  s.subspec 'Magnifier' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Component/Magnifier/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Magnifier/**/*.{h,m}"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_MAGNIFIER=1'}
+    ss.dependency                 "LLDebugTool/Core"
   end
-
+  
+  s.subspec 'Ruler' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Component/Ruler/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Ruler/**/*.{h,m}"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_RULER=1'}
+    ss.dependency                 "LLDebugTool/Core"
+  end
+  
+  s.subspec 'WidgetBorder' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Component/WidgetBorder/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/WidgetBorder/**/*.{h,m}"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_WIDGET_BORDER=1'}
+    ss.dependency                 "LLDebugTool/Core"
+  end
+  
+  s.subspec 'Html' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Component/Html/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Html/**/*.{h,m}"
+    ss.frameworks               = "WebKit"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_HTML=1'}
+    ss.dependency                 "LLDebugTool/Core"
+  end
+  
+  s.subspec 'Location' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Component/Location/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/Location/**/*.{h,m}"
+    ss.frameworks               = "CoreLocation", "MapKit"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_LOCATION=1'}
+    ss.dependency                 "LLDebugTool/Core"
+  end
+  
+  s.subspec 'ShortCut' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Component/ShortCut/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Component/ShortCut/**/*.{h,m}"
+    ss.pod_target_xcconfig      = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'LLDEBUGTOOL_SHORT_CUT=1'}
+    ss.dependency                 "LLDebugTool/Core"
+  end
+  
+  # Primary
+  s.subspec 'Storage' do |ss|
+    ss.public_header_files      = "LLDebugTool/Core/Storage/**/*.h"
+    ss.source_files             = "LLDebugTool/Core/Storage/**/*.{h,m}"
+    ss.dependency                 "LLDebugTool/Core"
+    ss.dependency                 "FMDB", "~> 2.0"
+  end
+  
+  # Primary
+  s.subspec 'Core' do |ss|
+    ss.public_header_files      = "LLDebugTool/LLDebug.h", "LLDebugTool/DebugTool/*.h", "LLDebugTool/Core/Others/**/*.h"
+    ss.source_files             = "LLDebugTool/LLDebug.h", "LLDebugTool/DebugTool/*.{h,m}", "LLDebugTool/Core/Others/**/*.{h,m}"
+    ss.resources                = "LLDebugTool/Core/Others/**/*.{xib,storyboard,bundle}"
+  end
+  
 end

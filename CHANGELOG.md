@@ -1,3 +1,128 @@
+## [1.3.8](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.8) (02/15/2020)
+
+### Add `Short Cut` function and fix some bugs.
+
+* `Short Cut` is a dynamic entrance for user to run code.
+* Multi language support.
+* Support for more file formats in `Sandbox`.
+* More color configs.
+
+## [1.3.7](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.7) (11/21/2019)
+
+###  `Mock Location` function and split into components.
+
+* Split into components, you can now integrate only a few components by `LLDebugTool/{subspec}`, such as `LLDebugTool/Network`、`LLDebugTool/Log`.
+* New `Mock Location` function, now you can mock location to anywhere at anytime. Support `CLLocationManager` and `MKMapView`.
+* Support `generate_multiple_pod_projects` in podfile.
+
+## [1.3.6](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.6) (11/07/2019)
+
+###  Optimize functional experience
+
+* Remove `Masonry`.
+* Fix some bugs.
+* More code comments.
+* Fix error in XCode 10.
+* Fix a crash when call twice load method. 
+
+## [1.3.5](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.5) (11/07/2019)
+
+###  Optimize functional experience
+
+* Remove `Masonry`.
+* Fix some bugs.
+* More code comments.
+* Fix error in XCode 10.
+
+## [1.3.4](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.4) (10/31/2019)
+
+###  More practical `Hierarchy` function
+
+Now you can use the `Hierarchy` function to dynamically modify attribute values. There are common attributes in the shortcut interface and most attributes in the details interface. It's a very interesting and useful function.
+
+#### Update
+
+* Update `Hierarchy Detail` to dynamic modify properties.
+
+## [1.3.3](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.3) (10/18/2019)
+
+###  Add `Html` function.
+
+You can debug HTML pages through `WKWebView`, `UIWebView` or your customized `ViewController` in your app at any time.
+
+#### Add
+
+* Now `LLURLProtocol` can correctly observe `WKWebView`.
+
+## [1.3.2](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.2) (09/29/2019)
+
+###  Add `Ruler`,  `Widget Border` function.
+
+Ruler function : Convenient tools to display touch point information.
+
+Widget Border function : Display element border, convenient to see the view's frame.
+
+#### Add
+
+* Add `LLSettingManager` to control some settings in tool, you can configure `LLConfig`'s options dynamically without re-archiving.
+
+* Add `Hierarchy Detail Info` function to show more detail info of target view. Similar to `Debug View Hierarchy` function in XCode.
+
+#### Remove
+
+* Remove all xib files, it wastes compilation time. In contrast, you need to introduce [Masonry](https://github.com/SnapKit/Masonry) lib.
+
+## [1.3.1](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.1) (09/06/2019)
+
+###  Fix some bugs.
+
+Fixed bugs in the UI.
+
+Compatible with version 2.0 or above of `FMDB`.
+
+#### Update
+
+* Update `LLStorageManager` to fix low version `FMDB`.
+
+## [1.3.0](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.3.0) (09/01/2019)
+
+###  Hierarchy and magnifying is coming.
+
+Hierarchy function : Now you can use `Hierarchy` function to see every element on screen, and you can visually see their frame and properties, `Hierarchy info` will come soon.
+
+Magnifying function : Now you can use `Magnifying` function to see the contents or color of each pixel, this makes it easier for you to communicate with the UI designer.
+
+More changes can be viewed in [Version 1.3.0 Project](https://github.com/HDB-Li/LLDebugTool/projects/8).
+
+#### Add
+
+* Refactory UI hierarchy, now use many windows to display functions, each function use one window, more information you can see `LLWindowManager.m`.
+
+#### Update
+
+* Changed folder path.
+* Update a new user interface.
+* Fix in iOS 13.
+
+#### Remove
+
+* `LLDebugTool` didn't supports component-based now. This is a useless feature and adds to the difficulty of calling between modules. `LLDebugTool` is later maintained as a single app rather than as multiple functional modules.
+* Remove some unused files, methods and macros.
+
+## [1.2.2](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.2.2) (10/23/2018)
+
+###  Fix LLWindow become keywindow's bug.
+
+`LLDebugTool` supports component-based now. Now you can integrate only one or more modules into your own **Debug debugger**. You can directly use the view controller contained in each module, or just call the functions in `Function` folder and build UI yourself.
+
+How to use components, see Wiki[Use Components](https://github.com/HDB-Li/LLDebugTool/wiki/Use-Components) or [Adding LLDebugTool to your project](https://github.com/HDB-Li/LLDebugTool#adding-lldebugtool-to-your-project).
+
+More changes can be viewed in [Version 1.2.2 Project](https://github.com/HDB-Li/LLDebugTool/projects/7).
+
+#### Update
+
+* Update `LLWindow.m` and make `[UIApplication sharedApplication].delegate.window` become key window when `LLWindow` become key window.
+
 ## [1.2.1](https://github.com/HDB-Li/LLDebugTool/releases/tag/1.2.1) (10/10/2018)
 
 ###  Fix a display bug.
